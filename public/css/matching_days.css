@@ -1,0 +1,164 @@
+* {
+    box-sizing: border-box;
+}
+
+/* STYLING HEADER SECTION */
+
+.header {
+    text-align: center;
+    border-bottom: 2px solid #2c3e50;
+    box-shadow: 0px 5px 10px 0px #5499c7;
+    margin-top: 5%;
+}
+
+.header h6 {
+    opacity: 0.8;
+}
+
+/* STYLING HEADER SECTION */
+
+.group {
+    margin-left: 10px;
+    width: 100%;
+    height: 110px;
+    overflow: hidden;
+    position: relative;
+}
+
+.group p {
+    /* color: #2c3e50; */
+    position: absolute;
+    margin-top: -5px;
+    cursor: text;
+    transition: .25 ease;
+}
+
+.group input[type='text'] {
+    display: block;
+    width: 400px;
+    height: 70px;
+    padding-top: 40px;
+    border: none;
+    border-bottom: 3px solid #2c3e50;
+    border-radius: 0;
+    color: #2e86c1;
+    font-size: 25.66667px;
+}
+
+.group input[type='text']::before {
+    /* content: ''; */
+    position: absolute;
+    width: 400px;
+    height: 80px;
+    border-bottom-color: 3px solid pink;
+    transform: translateX(-100%);
+}
+
+.week_days {
+    overflow: hidden;
+    margin-top: 3%;
+    border: 2px solid #2c3e50;
+    box-sizing: border-box;
+}
+
+.week_days h5 {
+    padding: 10px;
+}
+.boxes {
+    position: relative;
+    margin: auto;
+    height: 150px;
+}
+
+.boxes h6 {
+    overflow: hidden;
+    float: left;
+    border: 2px solid #17202A;
+    padding: 20px;
+    opacity: 0.8;
+}
+
+/*Checkboxes styles*/
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]+label {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 90px;
+    font-size: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+input[type="checkbox"]+label:last-child {
+    margin-bottom: 0;
+}
+
+input[type="checkbox"]+label:before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #17202A;
+    position: absolute;
+    left: 0;
+    top: 0;
+    -webkit-transition: all .12s, border-color .08s;
+    transition: all .12s, border-color .08s;
+}
+
+input[type="checkbox"]:checked+label:before {
+    width: 10px;
+    top: -5px;
+    left: 5px;
+    border-radius: 0;
+    opacity: 1;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/*Checkboxes styles*/
+.enterDates {
+    margin-left: 3%;
+    margin: auto;
+    border: 2px solid #2c3e50;
+    box-sizing: border-box;
+}
+
+/* colors for days  */
+
+.red {
+    background-color: #c0392b;
+    border: 1px solid;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.blue {
+    background-color: #2e86c1;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.green {
+    background-color: green;
+}
+
+@media (max-width: 768px) {
+    .label {
+        margin-left: 40px;
+    }
+}
+
+@media (max-width: 500px) {
+    .label {
+        margin-left: 2px;
+    }
+}
