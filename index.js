@@ -1,34 +1,34 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-// const flash = require('express-flash');
-// const session = require('express-session');
+const flash = require('express-flash');
+const session = require('express-session');
 
-// const pg = require("pg");
-// const Pool = pg.Pool;
+const pg = require("pg");
+const Pool = pg.Pool;
 
 //define instances
 let app = express();
 
 // initialise session middleware - flash-express depends on it
-// app.use(session({
-//     secret: "<add a secret string here>",
-//     resave: false,
-//     saveUninitialized: true
-// }));
+app.use(session({
+    secret: "<add a secret string here>",
+    resave: false,
+    saveUninitialized: true
+}));
 // // initialise the flash middleware
-// app.use(flash());
+app.use(flash());
 
-// let local = process.env.LOCAL || false;
-// if (process.env.DATABASE_URL && !local) {
-//     useSSL = true;
-// }
-// //define a connection string to be able to connect to the database.
-// const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/registration_numberDB';
-// const pool = new Pool({
-//     connectionString
-//     // ssl: useSSL
-// });
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local) {
+    useSSL = true;
+}
+//define a connection string to be able to connect to the database.
+const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/waiter_webapp_db';
+const pool = new Pool({
+    connectionString
+    // ssl: useSSL
+});
 // define instance of factory function
 
 // configure express handlebars
