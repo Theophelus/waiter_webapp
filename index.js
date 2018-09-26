@@ -3,7 +3,7 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const session = require('express-session');
-
+const Waiter_app = require('./waiter_app');
 const pg = require("pg");
 const Pool = pg.Pool;
 
@@ -30,7 +30,7 @@ const pool = new Pool({
     // ssl: useSSL
 });
 // define instance of factory function
-
+let waiter_app = Waiter_app(pool);
 // configure express handlebars
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
@@ -44,7 +44,7 @@ app.use(bodyParser.json());
 //configure public for=lder for static files
 app.use(express.static('public'));
 
-app.get('/',  (req, res) => res.render('home'));
+app.get('/', async (req, res) => res.render('home', waiter_app.getWeekdays()));
 
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {

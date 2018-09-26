@@ -7,7 +7,7 @@ create table waiter
 create table weedays
 (
     id serial primary key,
-    week_days text not null
+    weekday text not null
 );
 create table days_booked
 (
@@ -17,3 +17,11 @@ create table days_booked
     weekdays_id int,
     foreign key (weekdays_id) references weekdays(id)
 );
+
+insert into weekdays(weekday) values('Monday');
+insert into weekdays(weekday) values('Tuesday');
+insert into weekdays(weekday) values('Wednesday');
+insert into weekdays(weekday) values('Thursday');
+insert into weekdays(weekday) values('Friday');
+insert into weekdays(weekday) values('Saturday');
+insert into weekdays(weekday) values('Sunday');
