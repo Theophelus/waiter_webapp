@@ -44,9 +44,7 @@ app.use(bodyParser.json());
 //configure public for=lder for static files
 app.use(express.static('public'));
 
-app.get('/', function (req, res) {
-    res.render('home')
-});
+app.get('/',  (req, res) => res.render('home'));
 
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {
