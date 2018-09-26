@@ -49,14 +49,16 @@ app.get('/', async (req, res) => res.render('home', {
 }));
 
 //define a GET Route Hadler to get waiter name o
-app.get('waiter:names', async (req, res, next) => {
+app.get('/waiters/:names', async (req, res, next) => {
     try {
         let getNames = res.params.names;
-        
+
     } catch (error) {
         next(error.stack);
     }
 });
+// Define a POST Route Handler to Send the days the waiter can work to the server.
+app.post('/waiters/:names', async (req, res) => {});
 
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {

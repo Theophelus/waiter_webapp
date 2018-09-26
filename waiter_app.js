@@ -7,9 +7,6 @@ module.exports = (pool) => {
     // let getweek = getWeekdays();
 
 
-
-
-
     let getWaiterName = async (waiterName) => {
         if (waiterName == '' || !waiterName) {
             let checkName = await pool.query('SELECT names FROM waiter WHERE names = &1', [waiterName]);
