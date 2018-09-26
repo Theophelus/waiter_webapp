@@ -7,7 +7,8 @@
     </div>
     <div class="week_days">
         <h5>WELCOME</h5>
-        <h6 style="margin-left: 10px;">WELCOME <span style="font-size: 30px; color:  #5499c7">ANELE</span> BOOK YOUR SHIFTS FOR THE WEEK..!</h6>
+        <h6 style="margin-left: 10px;">WELCOME <span style="font-size: 30px; color:  #5499c7">ANELE</span> BOOK YOUR
+            SHIFTS FOR THE WEEK..!</h6>
         {{!-- <div class="group">
             <p>WAITER USERNAME</p>
             <input type="text" id="name" required="required">
@@ -19,17 +20,12 @@
         <form class="" action="/waiter/{{username}} " method="post">
             <div class="boxes">
                 <h5 style="text-align: center;">PLEASE SELECT WORKING DAYS..!</h5>
+                {{#each displayDays}}
                 <h6>
                     <input type="checkbox" id="days">
-                    <label for="days">MONDAY</label>
+                    <label for="days"> {{weekday}} </label>
                 </h6>
-                {{!-- <h6><input type="checkbox" name="Wednseday" id="days"><label for="days">MONDAY</label></h6> --}}
-                <h6><input type="checkbox" name="Wednseday" class="days"><label for="days">TUESDAY</label></h6>
-                <h6><input type="checkbox" name="Wednseday" class="days"><label for="days">WEDNESDAY</label></h6>
-                <h6><input type="checkbox" name="Wednseday" class="days"><label for="days">THURSDAY</label></h6>
-                <h6><input type="checkbox" name="Wednseday" class="days"><label for="days">FRIDAY</label></h6>
-                <h6><input type="checkbox" name="Wednseday" class="days"><label for="days">SATURDAY</label></h6>
-                <h6><input type="checkbox" name="Wednseday" class="days"><label for="days">SUNDAY</label></h6>
+                {{/each}}
             </div>
             <button type="submit" class="button-primary">SUBMIT SHIFTS</button>
         </form>

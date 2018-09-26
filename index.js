@@ -44,7 +44,9 @@ app.use(bodyParser.json());
 //configure public for=lder for static files
 app.use(express.static('public'));
 
-app.get('/', async (req, res) => res.render('home', waiter_app.getWeekdays()));
+app.get('/', async (req, res) => res.render('home', {
+    displayDays: await waiter_app.getWeekdays()
+}));
 
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {
