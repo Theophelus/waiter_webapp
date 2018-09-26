@@ -1,13 +1,12 @@
 <!-- Home Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
 <div class="container">
     <div class="header">
         <h4>WAITER AVAILABILITY</h4>
     </div>
     <div class="week_days">
         <h5>WELCOME</h5>
-        <h6 style="margin-left: 10px;">WELCOME <span style="font-size: 30px; color:  #5499c7">ANELE</span> BOOK YOUR
+        <h6 style="margin-left: 10px;">WELCOME <span style="font-size: 30px; color:  #5499c7">ANELE {{names}} </span> BOOK YOUR
             SHIFTS FOR THE WEEK..!</h6>
         {{!-- <div class="group">
             <p>WAITER USERNAME</p>
@@ -17,7 +16,7 @@
         <br>
     </div>
     <div class="enterDates">
-        <form class="" action="/waiter/{{username}} " method="post">
+        <form class="" action="/waiter/{{names}} " method="get">
             <div class="boxes">
                 <h5 style="text-align: center;">PLEASE SELECT WORKING DAYS..!</h5>
                 {{#each displayDays}}

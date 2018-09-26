@@ -48,6 +48,16 @@ app.get('/', async (req, res) => res.render('home', {
     displayDays: await waiter_app.getWeekdays()
 }));
 
+//define a GET Route Hadler to get waiter name o
+app.get('waiter:names', async (req, res, next) => {
+    try {
+        let getNames = res.params.names;
+        
+    } catch (error) {
+        next(error.stack);
+    }
+});
+
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {
     console.log('app starting on PORT', PORT);
