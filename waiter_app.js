@@ -3,28 +3,43 @@
 
 
 module.exports = (pool) => {
-    //define a variable to get all that getWaiterName
-    // let getweek = getWeekdays();
 
-
-    let getWaiterName = async (waiterName) => {
+    let setWaiters = async (waiterName) => {
+        let getShifts;
+        //define a variable to get all that getWaiterName
+        let getDays = getWeekdays();
         if (waiterName == '' || !waiterName) {
-            let checkName = await pool.query('SELECT names FROM waiter WHERE names = &1', [waiterName]);
+            let checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
             if (checkName.rowCount === 0) {
-                await pool.query('INSERT INTO WAITER(names) values($1)', [waiterName]);
-                return 'success';
+                await pool.query('INTERT INTO waiter(names) values($1)', [waiterName]);
+            } else {
+                if (checkName.rowCount) {
+                    let getName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
+                    let getNameID = getName.id;
+                    getShifts = await pool.query('SELECT weekdays_id FROM days_booked WHERE waiter_id = $1', [getNameID]);
+
+                    getDays = getDays.filter((weekdays) => {
+                        getShifts = getShifts.filter((workingShifts) => {
+                            if (weekdays.weekdays_id === workingShifts.id) {
+                                element['checked'] = 'checked';
+                            }
+                        });
+                    });
+                    return getDays;
+                }
             }
         }
     }
 
+
     //define function to get all weekdays
     let getWeekdays = async () => {
         let days = await pool.query('SELECT weekday FROM weekdays');
-        console.log(days.rows);
+        // console.log(days.rows);
         return days.rows;
     };
     return {
         getWeekdays,
-        getWaiterName
+        setWaiters
     }
 };

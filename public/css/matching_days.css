@@ -16,44 +16,6 @@
 }
 
 /* STYLING HEADER SECTION */
-
-.group {
-    margin-left: 10px;
-    width: 100%;
-    height: 110px;
-    overflow: hidden;
-    position: relative;
-}
-
-.group p {
-    /* color: #2c3e50; */
-    position: absolute;
-    margin-top: -5px;
-    cursor: text;
-    transition: .25 ease;
-}
-
-.group input[type='text'] {
-    display: block;
-    width: 400px;
-    height: 70px;
-    padding-top: 40px;
-    border: none;
-    border-bottom: 3px solid #2c3e50;
-    border-radius: 0;
-    color: #2e86c1;
-    font-size: 25.66667px;
-}
-
-.group input[type='text']::before {
-    /* content: ''; */
-    position: absolute;
-    width: 400px;
-    height: 80px;
-    border-bottom-color: 3px solid pink;
-    transform: translateX(-100%);
-}
-
 .week_days {
     overflow: hidden;
     margin-top: 3%;
@@ -64,6 +26,7 @@
 .week_days h5 {
     padding: 10px;
 }
+
 .boxes {
     position: relative;
     margin: auto;

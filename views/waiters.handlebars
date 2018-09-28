@@ -4,24 +4,27 @@
     <div class="header">
         <h4>WAITER AVAILABILITY</h4>
     </div>
-    <div class="week_days">
+    {{!-- <div class="week_days">
         <h5>WELCOME</h5>
-        <h6 style="margin-left: 10px;">WELCOME <span style="font-size: 30px; color:  #5499c7">ANELE {{names}} </span> BOOK YOUR
+        <h6 style="margin-left: 10px;">WELCOME <span style="font-size: 30px; color:  #5499c7">{{names}} </span> BOOK
+            YOUR
             SHIFTS FOR THE WEEK..!</h6>
-        {{!-- <div class="group">
-            <p>WAITER USERNAME</p>
-            <input type="text" id="name" required="required">
-            <div class="bar"></div>
-        </div> --}}
         <br>
-    </div>
+    </div> --}}
     <div class="enterDates">
-        <form class="" action="/waiters/{{names}} " method="get">
+        <div class="week_days">
+            <h5>WELCOME</h5>
+            <h6 style="margin-left: 10px;">WELCOME <span style="font-size: 30px; color:  #5499c7"> {{names}} </span>
+                BOOK YOUR
+                SHIFTS FOR THE WEEK..!</h6>
+            <br>
+        </div>
+        <form class="" action="/waiters/{{names}} " method="post">
             <div class="boxes">
                 <h5 style="text-align: center;">PLEASE SELECT WORKING DAYS..!</h5>
                 {{#each displayDays}}
                 <h6>
-                    <input type="checkbox" id="days">
+                    <input type="checkbox" id="days"  value="{{weekday}}" {{checked}}>
                     <label for="days"> {{weekday}} </label>
                 </h6>
                 {{/each}}

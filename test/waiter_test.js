@@ -12,9 +12,15 @@ const pool = new Pool({
 let newWaiter = Waiter(pool);
 
 describe('WAITER AVAILABILITY WEB APP', () => {
-    // beforeEach(async () => {
-    //     // clean the tables before each test run
-    //     // await pool.query("delete from registration_numbers;");
+    beforeEach(async () => {
+        // clean the tables before each test run
+        // await pool.query("delete from waiter;");
+        // await pool.query("delete from weekdays;");
+        await pool.query("delete from days_booked;");
+    });
 
+    // it('Should be able to check names and enter names in the database', async () => {
+    //     await newWaiter.getWaiterName('Anele')
+    //     assert.equal([{names: 'Anele'}], await newWaiter.getName('Anele'));
     // });
 });

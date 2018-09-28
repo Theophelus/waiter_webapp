@@ -44,21 +44,26 @@ app.use(bodyParser.json());
 //configure public for=lder for static files
 app.use(express.static('public'));
 
-app.get('/', async (req, res) => res.render('home', {
-    displayDays: await waiter_app.getWeekdays()
-}));
+app.get('/waiters', async (req, res) =>
+    res.render('waiters', {
+        displayDays: await waiter_app.getWeekdays()
+    }));
 
 //define a GET Route Hadler to get waiter name o
 app.get('/waiters/:names', async (req, res, next) => {
     try {
-        let getNames = res.params.names;
-
+        console.log(await waiter_app.setWaiters(req.params.names));
+       res.render('waiters', await waiter_app.setWaiters(req.params.names));
     } catch (error) {
         next(error.stack);
     }
 });
 // Define a POST Route Handler to Send the days the waiter can work to the server.
-app.post('/waiters/:names', async (req, res) => {});
+// app.post('/waiters/:names', async (req, res) => {});
+
+//Define a GET route handler to show which days waiters are available..
+// app.get('/days', async (req, res) => {});
+
 
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {
