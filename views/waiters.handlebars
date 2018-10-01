@@ -1,20 +1,18 @@
-<!-- Home Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<link rel="stylesheet" href="css/matching_days.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    <!-- Home Page Layout –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 <div class="container">
     <div class="header">
         <h4>WAITER AVAILABILITY</h4>
     </div>
-    {{!-- <div class="week_days">
-        <h5>WELCOME</h5>
-        <h6 style="margin-left: 10px;">WELCOME <span style="font-size: 30px; color:  #5499c7">{{names}} </span> BOOK
-            YOUR
-            SHIFTS FOR THE WEEK..!</h6>
-        <br>
-    </div> --}}
     <div class="enterDates">
         <div class="week_days">
             <h5>WELCOME</h5>
-            <h6 style="margin-left: 10px;">WELCOME <span style="font-size: 30px; color:  #5499c7"> {{names}} </span>
+            <h6 style="margin-left: 10px;"> WELCOME<span style="font-size: 30px; color:  #5499c7; text-transform:uppercase">
+                    {{messages.info}}
+                </span>
                 BOOK YOUR
                 SHIFTS FOR THE WEEK..!</h6>
             <br>
@@ -24,8 +22,8 @@
                 <h5 style="text-align: center;">PLEASE SELECT WORKING DAYS..!</h5>
                 {{#each displayDays}}
                 <h6>
-                    <input type="checkbox" id="days"  value="{{weekday}}" {{checked}}>
-                    <label for="days"> {{weekday}} </label>
+                    <input type="checkbox" id="id" value="{{weekday}}" {{checked}}>
+                    <label for="id"> {{weekday}} </label>
                 </h6>
                 {{/each}}
             </div>

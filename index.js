@@ -44,30 +44,28 @@ app.use(bodyParser.json());
 //configure public for=lder for static files
 app.use(express.static('public'));
 
-app.get('/waiters', async (req, res) =>
-    res.render('waiters', {
-        displayDays: await waiter_app.getWeekdays()
-    }));
-
 //define a GET Route Hadler to get waiter name o
 app.get('/waiters/:names', async (req, res, next) => {
     try {
         let waiterNames = req.params.names;
-        console.log(waiterNames);
         console.log(await waiter_app.setWaiters(waiterNames));
+        // let setNames = await waiter_app.setWaiters(waiterNames);
+        // req.flash('info', `${waiterNames}`);
         res.render('waiters', {
-            displayDays: await waiter_app.setWaiters(waiterNames),
-            displayDays: await waiter_app.getWeekdays()
-
+            // setNames,
+            displayDays: await waiter_app.getWeekdays(waiterNames)
         });
-} catch (error) {
-    next(error.stack);
-}
+    } catch (error) {
+        next(error.stack);
+    }
 });
 // Define a POST Route Handler to Send the days the waiter can work to the server.
-app.post('/waiters/:names', async (req, res) => {
-    let waiterNames = req.params.names;
-});
+// app.post('/waiters/:names', async (req, res) => {
+//     let waiterNames = req.params.names;
+//     console.log(await waiter_app.setWaiters(waiterNames));
+//     await waiter_app.setWaiters(waiterNames);
+//     res.redirect('/waiters/' + waiterNames);
+// });
 
 //Define a GET route handler to show which days waiters are available..
 // app.get('/days', async (req, res) => {});
