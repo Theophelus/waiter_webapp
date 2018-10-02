@@ -48,24 +48,44 @@ app.use(express.static('public'));
 app.get('/waiters/:names', async (req, res, next) => {
     try {
         let waiterNames = req.params.names;
-        console.log(await waiter_app.setWaiters(waiterNames));
-        // let setNames = await waiter_app.setWaiters(waiterNames);
-        // req.flash('info', `${waiterNames}`);
-        res.render('waiters', {
-            // setNames,
-            displayDays: await waiter_app.getWeekdays(waiterNames)
-        });
-    } catch (error) {
-        next(error.stack);
+        //let setNames = await waiter_app.setWaiters(waiterNames);
+        req.flash('info', ` WELCOME ${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
+        if(await waiter_app.checkNames(waiterNames)){
+            res.render('waiters', {
+                user_name: await waiter_app.getNames(waiterNames),
+                displayDays: await waiter_app.getWeekdays()
+            });    
+        }else{
+            res.render('waiters', {
+                user_name: waiterNames,
+                displayDays: await waiter_app.getWeekdays()
+            });
+        }
+    } catch (err) {
+        console.error('We dont know', err);
     }
 });
+
 // Define a POST Route Handler to Send the days the waiter can work to the server.
-// app.post('/waiters/:names', async (req, res) => {
-//     let waiterNames = req.params.names;
-//     console.log(await waiter_app.setWaiters(waiterNames));
-//     await waiter_app.setWaiters(waiterNames);
-//     res.redirect('/waiters/' + waiterNames);
-// });
+app.post('/waiters/:names', async (req, res, next) => {
+    console.log(true);
+    try {
+        let waiterNames = req.params.names
+        let {days} = req.body;
+        console.log(days);
+        // if (await waiter_app.checkNames(waiterNames)) {
+        await waiter_app.setWaiters(waiterNames);
+        await waiter_app.setWAiterAndDays(waiterNames, days);
+        // req.flash('info', 'Shifts Added SuccessFully..!');
+        // }else{
+        // req.flash('info', 'Shifts Not Added Something Went Wrong..!')
+        // res.redirect('/waiters/'+ waiterNames);
+        // }
+        res.redirect('/waiters/' + waiterNames);
+    } catch (err) {
+        console.error('Catch the error', err);
+    }
+});
 
 //Define a GET route handler to show which days waiters are available..
 // app.get('/days', async (req, res) => {});

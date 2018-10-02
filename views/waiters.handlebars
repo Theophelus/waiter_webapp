@@ -8,22 +8,22 @@
         <h4>WAITER AVAILABILITY</h4>
     </div>
     <div class="enterDates">
-        <div class="week_days">
-            <h5>WELCOME</h5>
-            <h6 style="margin-left: 10px;"> WELCOME<span style="font-size: 30px; color:  #5499c7; text-transform:uppercase">
-                    {{messages.info}}
-                </span>
-                BOOK YOUR
-                SHIFTS FOR THE WEEK..!</h6>
-            <br>
-        </div>
-        <form class="" action="/waiters/{{names}} " method="post">
+
+        <form action="/waiters/{{user_name}}" method="post">
+            <div class="week_days">
+                <h5>WELCOME</h5>
+                <h6 style="margin-left: 10px;"><span style="font-size: 20px; color:  #5499c7; text-transform:capitalize">
+                        {{messages.info}}
+                    </span>
+                </h6>
+                <br>
+            </div>
             <div class="boxes">
                 <h5 style="text-align: center;">PLEASE SELECT WORKING DAYS..!</h5>
                 {{#each displayDays}}
                 <h6>
-                    <input type="checkbox" id="id" value="{{weekday}}" {{checked}}>
-                    <label for="id"> {{weekday}} </label>
+                    <input type="checkbox" value="{{weekday}}" {{checked}} name="days" id="days">
+                    <label> {{weekday}} </label>
                 </h6>
                 {{/each}}
             </div>

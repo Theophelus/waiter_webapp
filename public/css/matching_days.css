@@ -42,7 +42,7 @@
 }
 
 /*Checkboxes styles*/
-input[type="checkbox"] {
+/* input[type="checkbox"] {
     display: none;
 }
 
@@ -85,7 +85,7 @@ input[type="checkbox"]:checked+label:before {
     border-left-color: transparent;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
-}
+} */
 
 /*Checkboxes styles*/
 .enterDates {
