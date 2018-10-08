@@ -1,21 +1,24 @@
+DROP TABLE IF EXISTS waiters, weekdays, days_booked;
+
 create table waiter
 (
-    id serial primary key,
+    id serial not null primary key,
     names text not null
 );
 
-create table weedays
+create table weekdays
 (
-    id serial primary key,
-    weekday text not null
+    id serial not null primary key,
+    weekday text UNIQUE
 );
+
 create table days_booked
 (
-    id serial primary key,
-    waiter_id int,
-    foreign key (waiter_id) references waiter(id),
-    weekdays_id int,
-    foreign key (weekdays_id) references weekdays(id)
+    id serial not null primary key,
+    waiter_id int NOT NULL,
+    weekdays_id int NOT NULL,
+    foreign key (waiter_id) references waiter(id) ON DELETE CASCADE,
+    foreign key (weekdays_id) references weekdays(id) ON DELETE CASCADE
 );
 
 insert into weekdays(weekday) values('Monday');

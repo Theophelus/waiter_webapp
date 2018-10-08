@@ -48,21 +48,21 @@ app.use(express.static('public'));
 app.get('/waiters/:names', async (req, res, next) => {
     try {
         let waiterNames = req.params.names;
-        //let setNames = await waiter_app.setWaiters(waiterNames);
+        // console.log(await waiter_app.getCheckedDays(waiterNames));
         req.flash('info', ` WELCOME ${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
-        if(await waiter_app.checkNames(waiterNames)){
+        if (await waiter_app.checkNames(waiterNames)) {
             res.render('waiters', {
-                user_name: await waiter_app.getNames(waiterNames),
-                displayDays: await waiter_app.getWeekdays()
-            });    
-        }else{
+                displayDays: await waiter_app.getCheckedDays(waiterNames),
+                user_name: await waiter_app.getNames(waiterNames)
+            });
+        } else {
             res.render('waiters', {
                 user_name: waiterNames,
                 displayDays: await waiter_app.getWeekdays()
             });
         }
     } catch (err) {
-        console.error('We dont know', err);
+        console.error('acatch the error', err);
     }
 });
 
@@ -72,26 +72,34 @@ app.post('/waiters/:names', async (req, res, next) => {
     try {
         let waiterNames = req.params.names
         let {days} = req.body;
-        console.log(days);
-        // if (await waiter_app.checkNames(waiterNames)) {
-        await waiter_app.setWaiters(waiterNames);
-        await waiter_app.setWAiterAndDays(waiterNames, days);
-        // req.flash('info', 'Shifts Added SuccessFully..!');
-        // }else{
-        // req.flash('info', 'Shifts Not Added Something Went Wrong..!')
-        // res.redirect('/waiters/'+ waiterNames);
-        // }
-        res.redirect('/waiters/' + waiterNames);
+        // console.log(days);
+        if (await waiter_app.checkNames(waiterNames)) {
+            await waiter_app.setWAiterAndDays(waiterNames, days);
+            // await waiter_app.setWaiters(waiterNames);
+            let user_name = await waiter_app.getNames(waiterNames);
+            req.flash('info', 'Shifts Added SuccessFully..!');
+            res.redirect('/waiters/' + user_name);
+        } else {
+            await waiter_app.setWAiterAndDays(waiterNames, days);
+            let displayDays = await waiter_app.getCheckedDays(waiterNames)
+            res.render('waiters', {
+                user_name: waiterNames,
+                displayDays
+            });
+        }
     } catch (err) {
         console.error('Catch the error', err);
     }
 });
 
-//Define a GET route handler to show which days waiters are available..
-// app.get('/days', async (req, res) => {});
+// Define a GET route handler to show which days waiters are available..
+app.get('/days', async (req, res) => {
+    res.render('days')
+});
 
 
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {
     console.log('app starting on PORT', PORT);
 });
+
