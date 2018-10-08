@@ -51,14 +51,15 @@ app.get('/waiters/:names', async (req, res, next) => {
         // console.log(await waiter_app.getCheckedDays(waiterNames));
         req.flash('info', ` WELCOME ${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
         if (await waiter_app.checkNames(waiterNames)) {
-            res.render('waiters', {
-                displayDays: await waiter_app.getCheckedDays(waiterNames),
-                user_name: await waiter_app.getNames(waiterNames)
-            });
+           let displayDays= await waiter_app.getCheckedDays(waiterNames);
+           console.log(displayDays);
+            let user_name= waiter_app.getNames(waiterNames);
+            res.render('waiters', {user_name, displayDays})
         } else {
             res.render('waiters', {
                 user_name: waiterNames,
-                displayDays: await waiter_app.getWeekdays()
+                displayDays: await waiter_app.getWeekdays(waiterNames)
+
             });
         }
     } catch (err) {
@@ -72,16 +73,14 @@ app.post('/waiters/:names', async (req, res, next) => {
     try {
         let waiterNames = req.params.names
         let {days} = req.body;
-        // console.log(days);
         if (await waiter_app.checkNames(waiterNames)) {
-            await waiter_app.setWAiterAndDays(waiterNames, days);
-            // await waiter_app.setWaiters(waiterNames);
-            let user_name = await waiter_app.getNames(waiterNames);
+            await waiter_app.setWAiterAndDays(days, waiterNames);
+            await waiter_app.getNames(waiterNames);
             req.flash('info', 'Shifts Added SuccessFully..!');
-            res.redirect('/waiters/' + user_name);
+            res.redirect('/waiters/' + waiterNames.names);
         } else {
-            await waiter_app.setWAiterAndDays(waiterNames, days);
-            let displayDays = await waiter_app.getCheckedDays(waiterNames)
+            await waiter_app.setWAiterAndDays(days, waiterNames);
+            let displayDays = await waiter_app.getWeekdays(waiterNames);
             res.render('waiters', {
                 user_name: waiterNames,
                 displayDays
@@ -102,4 +101,3 @@ let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {
     console.log('app starting on PORT', PORT);
 });
-

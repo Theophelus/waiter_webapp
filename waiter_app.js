@@ -8,12 +8,13 @@ module.exports = (pool) => {
     };
 
     let setWaiters = async (waiterName) => {
+        waiterName = waiterName.toLowerCase();
         if (waiterName != '' || waiterName !== undefined) {
-            let checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName.toLowerCase()]);
-            console.log(checkName);
+            let checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
             if (checkName.rowCount > 0) {} else {
-                await pool.query('INSERT INTO waiter(names) values($1)', [waiterName.toLowerCase()]);
+                await pool.query('INSERT INTO waiter(names) values($1)', [waiterName]);
             }
+        //    await getCheckedDays(waiterName);
         }
     };
 
@@ -31,14 +32,16 @@ module.exports = (pool) => {
         //define a variable to get all that getWaiterName
         let getAllDays = await getWeekdays();
         if (await checkNames(waiterName)) {
-            let checkName = await pool.query('SELECT id FROM waiter WHERE names = $1', [waiterName.toLowerCase()]);
-            let namesID = checkName.rows[0];
-            // console.log(namesID);
-            let getShifts = await pool.query('SELECT weekdays_id FROM days_booked WHERE waiter_id = $1', [namesID.toLowerCase()]);
+            let checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
+            let namesID = checkName.rows[0].id;
+
+            let getShifts = await pool.query('SELECT weekdays_id FROM days_booked WHERE waiter_id = $1', [namesID]);
             console.log(getShifts);
-            for (let workingShifts of getShifts) {
+            let selectedShifts = getShifts.rows;
+
+            for (let workingShifts of selectedShifts) {
                 for (let getDays of getAllDays) {
-                    if (workingShifts.rows.weekdays_id === getDays.id) {
+                    if (workingShifts.weekdays_id === getDays.id) {
                         getDays['checked'] = 'checked';
                     }
                 };
@@ -51,34 +54,40 @@ module.exports = (pool) => {
         let getWaiterNames = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName.toLowerCase()]);
         return getWaiterNames.rows[0];
     }
+
+
     //define a function to insert name.id and days.id selected in a server
-    let setWAiterAndDays = async (setWaiterID, weekdaysID) => {
+    let setWAiterAndDays = async (daysOfTheWeek, setWaiter) => {
+        if (await checkNames(setWaiter)) {
 
-        if (await checkNames(setWaiterID)) {
-            let setWaiter = await pool.query('SELECT * FROM waiter WHERE names = $1', [setWaiterID.toLowerCase()]);
-            let getWaiterID = setWaiter.rows[0].id;
-            console.log(getWaiterID);
+            let getWaiterID = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName.toLowerCase()]);
+            let waiterID = getWaiterID.rows[0].id;
 
-            await pool.query('DELETE days_booked WHERE names_id = $1', [getWaiterID]);
+            await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [getWaiterID]);
+            for (let i = 0; i < daysOfTheWeek.length; i++) {
+                const element = daysOfTheWeek[i];
 
-            //Filter through the list of weekdaysweek
-            for (let i = 0; i < weekdaysID.length; i++) {
-                const element = weekdaysID[i];
                 let daysID = await pool.query('SELECT id FROM weekdays WHERE weekday = $1', [element]);
-                // console.log(daysID);
-                await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1,$2)', [getWaiterID, daysID.rows[0]]);
+                let days = daysID.rows[0].id;
+                await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID, days]);
             }
+
         } else {
-            await setWaiters(setWaiterID);
-            let setWaiter = await pool.query('SELECT id FROM waiter WHERE names = $1', [setWaiterID.toLowerCase()]);
-            let getWaiterID = setWaiter.rows[0];
-            for (let i = 0; i < weekdaysID.length; i++) {
-                const element = weekdaysID[i];
+            await setWaiters(setWaiter);
+            let setWaiterName = await pool.query('SELECT id FROM waiter WHERE names = $1', [setWaiter.toLowerCase()]);
+
+            let getWaiterID = setWaiterName.rows[0].id;
+
+            for (let i = 0; i < daysOfTheWeek.length; i++) {
+                const element = daysOfTheWeek[i];
+
                 let daysID = await pool.query('SELECT id FROM weekdays WHERE weekday = $1', [element]);
-                await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [getWaiterID.id, daysID.rows[0]]);
+                let days = daysID.rows[0].id;
+                await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [getWaiterID, days]);
             }
         }
     };
+
     return {
         getWeekdays,
         setWaiters,
