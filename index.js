@@ -93,7 +93,7 @@ app.post('/waiters/:names', async (req, res, next) => {
 
 // Define a GET route handler to show which days waiters are available..
 app.get('/days', async (req, res) => {
-    res.render('days')
+    res.render('days', {displayDays: await waiter_app.getWeekdays()});
 });
 
 

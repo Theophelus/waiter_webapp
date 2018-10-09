@@ -14,7 +14,6 @@ module.exports = (pool) => {
             if (checkName.rowCount > 0) {} else {
                 await pool.query('INSERT INTO waiter(names) values($1)', [waiterName]);
             }
-        //    await getCheckedDays(waiterName);
         }
     };
 

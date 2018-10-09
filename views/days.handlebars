@@ -5,13 +5,28 @@
     <div class="enterDates">
         <div class="boxes">
             <h5 style="text-align: center;">WAITERS AVAILABLE FOR THE WEEK..!</h5>
-            {{#each displayDays}}
-            <h6>
-                <label class="{{color}}" > {{weekday}} </label>
-            </h6>
-            {{#each waiter}}
-            <h6> {{names}} </h6>
-            {{/each}}
+            <tr>
+                <th>
+                    {{!-- <h6> --}}
+                       WORKING DAYS
+                    {{!-- </h6> --}}
+                </th>
+            </tr>
+                        {{#each displayDays}}
+
+            <tr>
+                <td>
+                     <label class="{{color}}"> {{weekday}} </label>
+                </td>
+            </tr>
+
+            {{!-- {{#each waiter}}
+            <tr>
+                <td>
+                    <h6> {{names}} </h6>
+                </td>
+            </tr>
+            {{/each}} --}}
             {{/each}}
         </div>
     </div>
