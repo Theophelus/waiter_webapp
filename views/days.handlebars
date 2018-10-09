@@ -3,31 +3,29 @@
         <h4>ADMINISTRATOR DASHBOARD</h4>
     </div>
     <div class="enterDates">
-        <div class="boxes">
             <h5 style="text-align: center;">WAITERS AVAILABLE FOR THE WEEK..!</h5>
-            <tr>
-                <th>
-                    {{!-- <h6> --}}
-                       WORKING DAYS
-                    {{!-- </h6> --}}
-                </th>
-            </tr>
-                        {{#each displayDays}}
-
-            <tr>
-                <td>
-                     <label class="{{color}}"> {{weekday}} </label>
-                </td>
-            </tr>
-
-            {{!-- {{#each waiter}}
-            <tr>
-                <td>
-                    <h6> {{names}} </h6>
-                </td>
-            </tr>
-            {{/each}} --}}
-            {{/each}}
-        </div>
+            <table class="u-full-width">
+                <thead>
+                    <tr>
+                       <h6><th>WORKING DAYS</th></h6> 
+                       <h6><th>WAITER NAMES</th></h6> 
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {{!-- <tr>
+                        <td>Dave Gamache</td>
+                        <td>26</td>
+                        <td>Male</td>
+                        <td>San Francisco</td>
+                    </tr>
+                    <tr>
+                        <td>Dwayne Johnson</td>
+                        <td>42</td>
+                        <td>Male</td>
+                        <td>Hayward</td>
+                    </tr> --}}
+                </tbody>
+            </table>
     </div>
 </div>

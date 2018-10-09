@@ -76,11 +76,11 @@ app.post('/waiters/:names', async (req, res, next) => {
         if (await waiter_app.checkNames(waiterNames)) {
             await waiter_app.setWAiterAndDays(days, waiterNames);
             await waiter_app.getNames(waiterNames);
-            req.flash('info', 'Shifts Added SuccessFully..!');
             res.redirect('/waiters/' + waiterNames.names);
         } else {
             await waiter_app.setWAiterAndDays(days, waiterNames);
             let displayDays = await waiter_app.getWeekdays(waiterNames);
+            req.flash('info', 'These are the days you selected..!');
             res.render('waiters', {
                 user_name: waiterNames,
                 displayDays
@@ -93,7 +93,8 @@ app.post('/waiters/:names', async (req, res, next) => {
 
 // Define a GET route handler to show which days waiters are available..
 app.get('/days', async (req, res) => {
-    res.render('days', {displayDays: await waiter_app.getWeekdays()});
+    res.render('days' );
+    // {displayDays: await waiter_app.getWeekdays()}
 });
 
 

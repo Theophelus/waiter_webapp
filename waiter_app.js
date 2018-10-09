@@ -40,11 +40,12 @@ module.exports = (pool) => {
 
             for (let workingShifts of selectedShifts) {
                 for (let getDays of getAllDays) {
-                    if (workingShifts.weekdays_id === getDays.id) {
-                        getDays['checked'] = 'checked';
+                    if (workingShifts.weekday === getDays.weekday) {
+                        getDays.checked = 'checked';
                     }
                 };
             };
+            console.log(getAllDays);
             return getAllDays;
         }
     }
