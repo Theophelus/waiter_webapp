@@ -3,29 +3,29 @@
         <h4>ADMINISTRATOR DASHBOARD</h4>
     </div>
     <div class="enterDates">
-            <h5 style="text-align: center;">WAITERS AVAILABLE FOR THE WEEK..!</h5>
-            <table class="u-full-width">
-                <thead>
-                    <tr>
-                       <h6><th>WORKING DAYS</th></h6> 
-                       <h6><th>WAITER NAMES</th></h6> 
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    {{!-- <tr>
-                        <td>Dave Gamache</td>
-                        <td>26</td>
-                        <td>Male</td>
-                        <td>San Francisco</td>
-                    </tr>
-                    <tr>
-                        <td>Dwayne Johnson</td>
-                        <td>42</td>
-                        <td>Male</td>
-                        <td>Hayward</td>
-                    </tr> --}}
-                </tbody>
-            </table>
+        <h5 style="text-align: center; margin-top: 10px;">WAITERS AVAILABLE FOR THE WEEK..!</h5>
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <h6>
+                        <th style="text-align: center;">WORKING DAYS</th>
+                    </h6>
+                    <h6>
+                        <th style="text-align: center;">WAITER NAMES</th>
+                    </h6>
+
+                </tr>
+            </thead>
+            {{#each displayDays}}
+            <tr>
+                <td style="padding-left: 10px;"> {{weekday}} </td>
+            </tr>
+            {{/each}}
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <a href="/delete" class="reset">reset <i class="fas fa-trash"></i></a>
     </div>
 </div>

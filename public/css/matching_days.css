@@ -41,8 +41,8 @@
     opacity: 0.8;
 }
 
-/*Checkboxes styles*/
-/* input[type="checkbox"] {
+/* Checkboxes styles*/ 
+ input[type="checkbox"] {
     display: none;
 }
 
@@ -85,7 +85,31 @@ input[type="checkbox"]:checked+label:before {
     border-left-color: transparent;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
-} */
+}
+.reset {
+    display: inline-block;
+    height: 38px;
+    padding: 0 30px;
+    color: #555;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 38px;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.reset:hover {
+    background-color: #FDEDEC;
+    color: #E74C3C;
+}
 
 /*Checkboxes styles*/
 .enterDates {
@@ -94,7 +118,9 @@ input[type="checkbox"]:checked+label:before {
     border: 2px solid #2c3e50;
     box-sizing: border-box;
 }
-
+.btn {
+    margin-top: -100px;
+}
 /* colors for days  */
 
 .red {

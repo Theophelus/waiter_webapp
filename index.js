@@ -49,13 +49,17 @@ app.get('/waiters/:names', async (req, res, next) => {
     try {
         let waiterNames = req.params.names;
         // console.log(await waiter_app.getCheckedDays(waiterNames));
-        req.flash('info', ` WELCOME ${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
+        
         if (await waiter_app.checkNames(waiterNames)) {
-           let displayDays= await waiter_app.getCheckedDays(waiterNames);
-           console.log(displayDays);
-            let user_name= waiter_app.getNames(waiterNames);
-            res.render('waiters', {user_name, displayDays})
+            let displayDays = await waiter_app.getCheckedDays(waiterNames);
+            let user_name = waiter_app.getNames(waiterNames);
+            req.flash('info', 'YOU WILL BE WORKING ON SELECTED DAYS..!');
+            res.render('waiters', {
+                user_name,
+                displayDays
+            })
         } else {
+            req.flash('info', ` WELCOME ${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
             res.render('waiters', {
                 user_name: waiterNames,
                 displayDays: await waiter_app.getWeekdays(waiterNames)
@@ -71,31 +75,35 @@ app.get('/waiters/:names', async (req, res, next) => {
 app.post('/waiters/:names', async (req, res, next) => {
     console.log(true);
     try {
-        let waiterNames = req.params.names
+        let waiterNames = req.params.names;
+        console.log(waiterNames);
         let {days} = req.body;
         if (await waiter_app.checkNames(waiterNames)) {
             await waiter_app.setWAiterAndDays(days, waiterNames);
-            await waiter_app.getNames(waiterNames);
-            res.redirect('/waiters/' + waiterNames.names);
-        } else {
-            await waiter_app.setWAiterAndDays(days, waiterNames);
-            let displayDays = await waiter_app.getWeekdays(waiterNames);
-            req.flash('info', 'These are the days you selected..!');
+            let waiter = await waiter_app.getNames(waiterNames);
+            res.redirect('/waiters/' + waiter);
+        }
+         else {
+            await waiter_app.setWAiterAndDays(waiterNames, days);
+            req.flash('info', `${waiterNames}, These are the days you selected..!`);
             res.render('waiters', {
                 user_name: waiterNames,
-                displayDays
+                displayDays: await waiter_app.getCheckedDays(waiterNames)
             });
         }
+
     } catch (err) {
         console.error('Catch the error', err);
     }
 });
 
-// Define a GET route handler to show which days waiters are available..
-app.get('/days', async (req, res) => {
-    res.render('days' );
-    // {displayDays: await waiter_app.getWeekdays()}
-});
+// // Define a GET route handler to show which days waiters are available..
+// app.get('/days', async (req, res) => {
+//     res.render('days', {
+//         displayDays: await waiter_app.getWeekdays()
+//     });
+//     // {displayDays: await waiter_app.getWeekdays()}
+// });
 
 
 let PORT = process.env.PORT || 3020;
