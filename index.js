@@ -62,7 +62,7 @@ app.get('/waiters/:names', async (req, res, next) => {
             req.flash('info', ` WELCOME ${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
             res.render('waiters', {
                 user_name: waiterNames,
-                displayDays: await waiter_app.getCheckedDays(waiterNames)
+                displayDays: await waiter_app.getWeekdays(waiterNames)
 
             });
         }

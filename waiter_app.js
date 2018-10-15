@@ -59,15 +59,20 @@ module.exports = (pool) => {
         let getShifts = await pool.query('SELECT waiter.names, weekdays.weekday FROM days_booked INNER JOIN waiter ON days_booked.waiter_id = waiter.id INNER JOIN weekdays ON days_booked.weekdays_id = weekdays.id where names= $1', [waiterName]);
         let selectedShifts = getShifts.rows;
 
+       // console.log(selectedShifts);
         for (let getDays of getAllDays) {
             for (let workingShifts of selectedShifts) {
-                if (workingShifts.weekday === getDays.weekday) {
-                    workingShifts['checked'] = 'checked';
+               // console.log(workingShifts);
+                if (getDays.weekday === workingShifts.weekday) {
+                    getDays['checked'] = 'checked';
                 }
+                // console.log(workingShifts)
+                // return workingShifts
             };
         };
         // console.log(getAllDays);
         return getAllDays;
+        
     }
 
     let getNames = async (waiterName) => {

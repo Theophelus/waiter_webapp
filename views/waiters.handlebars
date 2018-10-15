@@ -6,7 +6,7 @@
 <div class="container">
     <div class="header">
         <h4>WAITER AVAILABILITY</h4>
-        <h6 style="float:right; margin-top: -40px; padding: 10px; color: black;"> <a href="/days" style="text-decoration: none; color:#000000;"><i
+        <h6 style="float:right; margin-top: -30px; padding-right: 20px; color: black;"> <a href="/days" style="text-decoration: none; color:#000000;"><i
                     class="fas fa-user-shield" style="color: #F39C12;"></i> admin dashboard</a> </h6>
     </div>
     <div class="enterDates">
@@ -25,7 +25,7 @@
                 {{#each displayDays}}
                 <h6>
                     <input type="checkbox" id="{{weekday}}" name="days" value="{{weekday}}" {{checked}}>
-                    <label for="{{weekday}}" {{checked}}> {{weekday}} </label>
+                    <label for="{{weekday}}"> {{weekday}} </label>
                 </h6>
                 {{/each}}
             </div>
