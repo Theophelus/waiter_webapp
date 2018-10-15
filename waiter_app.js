@@ -52,20 +52,21 @@ module.exports = (pool) => {
             }
         }
     }
+
     let getCheckedDays = async (waiterName) => {
         //define a variable to get all that getWaiterName
         let getAllDays = await getWeekdays();
         let getShifts = await pool.query('SELECT waiter.names, weekdays.weekday FROM days_booked INNER JOIN waiter ON days_booked.waiter_id = waiter.id INNER JOIN weekdays ON days_booked.weekdays_id = weekdays.id where names= $1', [waiterName]);
         let selectedShifts = getShifts.rows;
-        
+
         for (let getDays of getAllDays) {
             for (let workingShifts of selectedShifts) {
-                console.log(workingShifts);
                 if (workingShifts.weekday === getDays.weekday) {
                     workingShifts['checked'] = 'checked';
                 }
             };
         };
+        // console.log(getAllDays);
         return getAllDays;
     }
 
@@ -74,12 +75,25 @@ module.exports = (pool) => {
         return getWaiterNames.rows[0];
     }
 
+    //define a function for administrator ro check waiter on shifts
+    let adminCheckWaiters = async () => {
+        let getDays = await getWeekdays();
+        for (const days of getDays) {
+            let results = await pool.query('SELECT waiter.names as names FROM days_booked INNER JOIN waiter ON days_booked.waiter_id = waiter.id INNER JOIN weekdays ON days_booked.weekdays_id = weekdays.id where weekdays.id = $1', [days.id]);
+            days.waiter = results.rows;
+        }
+        return getDays;
+    }
+
+
+
     return {
         getWeekdays,
         setWaiters,
         setWAiterAndDays,
         getCheckedDays,
         getNames,
-        checkNames
+        checkNames,
+        adminCheckWaiters
     }
 };
