@@ -84,13 +84,12 @@ module.exports = (pool) => {
     let adminCheckWaiters = async () => {
         let getDays = await getWeekdays();
         for (const days of getDays) {
-            let results = await pool.query('SELECT waiter.names as names FROM days_booked INNER JOIN waiter ON days_booked.waiter_id = waiter.id INNER JOIN weekdays ON days_booked.weekdays_id = weekdays.id where weekdays.id = $1', [days.id]);
+            let results = await pool.query('SELECT waiter.names as names FROM days_booked INNER JOIN waiter ON days_booked.waiter_id = waiter.id INNER JOIN weekdays ON days_booked.weekdays_id = weekdays.id where weekdays.weekday = $1', [days.weekday]);
             days.waiter = results.rows;
+            console.log(days.names = results.rows);
         }
         return getDays;
     }
-
-
 
     return {
         getWeekdays,

@@ -4,8 +4,15 @@
     </div>
     <div class="adminDashboard">
         <h5 style="text-align: center; margin-top: 0px;">WAITERS AVAILABLE FOR THE WEEK..!</h5>
-        <table class="u-full-width" style="margin-top: -16px">
-            <thead >
+        {{#each displayDays}}
+        <div class="one column" style="display:inline-block; margin: 30px;">
+            <h6>
+                {{weekday}}
+            </h6>
+        </div>
+        {{/each}}
+        {{!-- <table class="u-full-width" style="margin-top: -16px">
+            <thead>
                 <tr>
                     <h6>
                         <th style="text-align: center;">WORKING DAYS</th>
@@ -17,19 +24,19 @@
                 </tr>
             </thead>
             {{#each displayDays}}
-            <tr>
-                <td style="padding-left: 10px;"> {{weekday}} </td>
-            </tr>
-            {{#each waiter}}
-            <tr>
-                <td> {{names}} </td>
-            </tr>
-            {{/each}}
-            {{/each}}
             <tbody>
 
+                <tr>
+                    <th style="padding-left: 10px;"> {{weekday}} </th>
+                </tr>
+                {{#each waiter}}
+                <tr>
+                    <td> {{names}} </td>
+                </tr>
             </tbody>
-        </table>
+            {{/each}}
+            {{/each}}
+        </table> --}}
 
         <a href="/delete" class="reset">reset <i class="fas fa-trash"></i></a>
         <br>

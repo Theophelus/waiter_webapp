@@ -118,7 +118,7 @@ input[type="checkbox"]:checked+label:before {
 }
 
 .reset:hover {
-    background-color: #5DADE2;
+    background-color: #0FA0CE;
     color: #F8F9F9;
 }
 

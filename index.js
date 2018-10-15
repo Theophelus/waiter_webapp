@@ -53,13 +53,13 @@ app.get('/waiters/:names', async (req, res, next) => {
         if (await waiter_app.checkNames(waiterNames)) {
             let user_name = waiter_app.getNames(waiterNames);
             let displayDays = await waiter_app.getCheckedDays(waiterNames);
-            req.flash('info', 'YOU WILL BE WORKING ON SELECTED DAYS..!');
+            req.flash('info', `${waiterNames} YOU WILL BE WORKING ON THESES SELECTED DAYS..!`);
             res.render('waiters', {
                 user_name,
                 displayDays
             })
         } else {
-            req.flash('info', ` WELCOME ${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
+            req.flash('info', `${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
             res.render('waiters', {
                 user_name: waiterNames,
                 displayDays: await waiter_app.getWeekdays(waiterNames)
@@ -86,7 +86,7 @@ app.post('/waiters/:names', async (req, res, next) => {
             res.redirect('/waiters/' + waiter);
         } else {
             await waiter_app.setWAiterAndDays(waiterNames, days);
-            req.flash('info', `${waiterNames}, These are the days you selected..!`);
+            req.flash('info', `${waiterNames}, THESE ARE THE WORKING DAYS YOU HAVE SELECTED.!`);
             res.render('waiters', {
                 user_name: waiterNames,
                 displayDays: await waiter_app.getCheckedDays(waiterNames)
@@ -103,7 +103,6 @@ app.get('/days', async (req, res) => {
     res.render('days', {
         displayDays: await waiter_app.adminCheckWaiters()
     });
-    // {displayDays: await waiter_app.getWeekdays()}
 });
 
 
