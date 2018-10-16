@@ -1,42 +1,31 @@
-<div class="container">
+<div class="container2">
     <div class="header">
         <h4>ADMINISTRATOR DASHBOARD</h4>
     </div>
     <div class="adminDashboard">
         <h5 style="text-align: center; margin-top: 0px;">WAITERS AVAILABLE FOR THE WEEK..!</h5>
-        {{#each displayDays}}
-        <div class="one column" style="display:inline-block; margin: 30px;">
-            <h6>
-                {{weekday}}
-            </h6>
-        </div>
-        {{/each}}
-        {{!-- <table class="u-full-width" style="margin-top: -16px">
+
+        </table>
+        <table class="u-full-width">
             <thead>
                 <tr>
-                    <h6>
-                        <th style="text-align: center;">WORKING DAYS</th>
-                    </h6>
-                    <h6>
-                        <th style="text-align: center;">WAITER NAMES</th>
-                    </h6>
-
+                    {{!-- <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th> --}}
+                    {{#each displayDays}}
+                    <th>{{weekday}}</th>
+                     {{/each}}
                 </tr>
             </thead>
-            {{#each displayDays}}
             <tbody>
 
-                <tr>
-                    <th style="padding-left: 10px;"> {{weekday}} </th>
-                </tr>
-                {{#each waiter}}
-                <tr>
-                    <td> {{names}} </td>
-                </tr>
             </tbody>
-            {{/each}}
-            {{/each}}
-        </table> --}}
+
+        </table>
 
         <a href="/delete" class="reset">reset <i class="fas fa-trash"></i></a>
         <br>
