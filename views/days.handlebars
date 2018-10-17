@@ -3,26 +3,28 @@
         <h4>ADMINISTRATOR DASHBOARD</h4>
     </div>
     <div class="adminDashboard">
-        <h5 style="text-align: center; margin-top: 0px;">WAITERS AVAILABLE FOR THE WEEK..!</h5>
+        <h5 style="text-align: center; margin-top: 20px;">WAITERS AVAILABLE FOR THE WEEK..!</h5>
 
-        </table>
         <table class="u-full-width">
             <thead>
                 <tr>
-                    {{!-- <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th> --}}
                     {{#each displayDays}}
-                    <th>{{weekday}}</th>
-                     {{/each}}
+                    <th style="text-align: center;">{{weekday}}</th>
+                    {{/each}}
                 </tr>
             </thead>
             <tbody>
-
+                <tr>
+                    {{#each displayDays}}
+                    <td style="text-align: center;">
+                        <ol style="list-style: none;">
+                            {{#each waiter}}
+                            <li> {{names}}</li>
+                            {{/each}}
+                        </ol>
+                    </td>
+                    {{/each}}
+                </tr>
             </tbody>
 
         </table>

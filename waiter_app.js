@@ -23,7 +23,6 @@ module.exports = (pool) => {
             let waiterName = await getNames(setWaiter);
             let waiterID = waiterName;
 
-
             await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [waiterID]);
 
             for (const dayId of setWeekdays) {
@@ -31,6 +30,7 @@ module.exports = (pool) => {
                 let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
                 await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID.id, foundId.rows[0].id]);
             }
+            
         } else {
             await setWaiters(setWaiter);
             let waiterName = await getNames(setWaiter);
