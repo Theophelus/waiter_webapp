@@ -19,19 +19,18 @@ describe('WAITER AVAILABILITY WEB APP', () => {
         await pool.query("delete from days_booked;");
     });
 
-    it('Should return checked days', async function(){
+    it('Should all days of the week', async function(){
 
-        await newWaiter.setWaiters('Anele')
-
-        await newWaiter.setWAiterAndDays('Anele', ['Monday','Wednesday'])
-
-        let checked = await  newWaiter.getCheckedDays()
-
-        console.log(checked)
-
+        assert.deepEqual(await newWaiter.getWeekdays([]), [ { "weekday": 'Monday' },
+        {"weekday": "Tuesday" },
+        {"weekday": "Wednesday" },
+        {"weekday": "Thursday" },
+        {"weekday": "Friday" },
+        {"weekday": "Saturday" },
+        {"weekday": "Sunday" }]);
     })
-    // it('Should be able to check names and enter names in the database', async () => {
-    //     await newWaiter.getWaiterName('Anele')
-    //     assert.equal([{names: 'Anele'}], await newWaiter.getName('Anele'));
-    // });
+    it('Should be able to check names and enter names in the database', async () => {
+        // await newWaiter.getNames('Anele')
+        assert.equal(await newWaiter.setWaiters('Anele'));
+    });
 });

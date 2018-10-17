@@ -4,6 +4,7 @@ module.exports = (pool) => {
     //define function to get all weekdays
     let getWeekdays = async () => {
         let days = await pool.query('SELECT weekday FROM weekdays');
+        console.log(days.rows);
         return days.rows;
     };
 
@@ -30,7 +31,7 @@ module.exports = (pool) => {
                 let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
                 await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID.id, foundId.rows[0].id]);
             }
-            
+
         } else {
             await setWaiters(setWaiter);
             let waiterName = await getNames(setWaiter);
@@ -59,10 +60,10 @@ module.exports = (pool) => {
         let getShifts = await pool.query('SELECT waiter.names, weekdays.weekday FROM days_booked INNER JOIN waiter ON days_booked.waiter_id = waiter.id INNER JOIN weekdays ON days_booked.weekdays_id = weekdays.id where names= $1', [waiterName]);
         let selectedShifts = getShifts.rows;
 
-       // console.log(selectedShifts);
+        // console.log(selectedShifts);
         for (let getDays of getAllDays) {
             for (let workingShifts of selectedShifts) {
-               // console.log(workingShifts);
+                // console.log(workingShifts);
                 if (getDays.weekday === workingShifts.weekday) {
                     getDays['checked'] = 'checked';
                 }
@@ -72,7 +73,7 @@ module.exports = (pool) => {
         };
         // console.log(getAllDays);
         return getAllDays;
-        
+
     }
 
     let getNames = async (waiterName) => {
@@ -87,10 +88,24 @@ module.exports = (pool) => {
             let results = await pool.query('SELECT waiter.names as names FROM days_booked INNER JOIN waiter ON days_booked.waiter_id = waiter.id INNER JOIN weekdays ON days_booked.weekdays_id = weekdays.id where weekdays.weekday = $1', [days.weekday]);
             days.waiter = results.rows;
             console.log(days.names = results.rows);
+            if (days.waiter.length === 3) {
+                days['colors'] = 'green';
+            } else {
+                if (days.waiter.length > 3 || days.waiter.length === 0) {
+                    days['colors'] = 'blue';
+                } else {
+                    if (days.waiter.length > 3 || days.waiter.length === 0) {
+                        days['colors'] = 'blue';
+                    } else {
+                        if (days.waiter.length < 3 || days.waiter.length === 0) {
+                            days['colors'] = 'red';
+                        }
+                    }
+                }
+            }
         }
         return getDays;
     }
-
     return {
         getWeekdays,
         setWaiters,

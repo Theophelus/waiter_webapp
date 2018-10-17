@@ -16,10 +16,12 @@
             <tbody>
                 <tr>
                     {{#each displayDays}}
-                    <td style="text-align: center;">
-                        <ol style="list-style: none;">
+                    <td style="text-align: center;" class="{{colors}}">
+                        <ol style="list-style: none; display: block;">
                             {{#each waiter}}
-                            <li> {{names}}</li>
+                            <li>
+                                <h6 style="font-size: 20px; color:#CCD1D1; text-transform:capitalize">{{names}}</h6>
+                            </li>
                             {{/each}}
                         </ol>
                     </td>

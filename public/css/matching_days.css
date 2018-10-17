@@ -13,7 +13,6 @@
 
 /* STYLING HEADER SECTION */
 
-
 .header {
     text-align: center;
     border-bottom: 2px solid #2c3e50;
@@ -26,6 +25,7 @@
 }
 
 /* STYLING HEADER SECTION */
+
 .week_days {
     overflow: hidden;
     margin-top: 3%;
@@ -52,6 +52,7 @@
 }
 
 /* Checkboxes styles*/
+
 input[type="checkbox"] {
     display: none;
 }
@@ -137,6 +138,7 @@ input[type="checkbox"]:checked+label:before {
 }
 
 /*Checkboxes styles*/
+
 .enterDates {
     margin-left: 3%;
     margin: auto;
@@ -151,20 +153,22 @@ input[type="checkbox"]:checked+label:before {
 /* colors for days  */
 
 .red {
-    background-color: #c0392b;
-    border: 1px solid;
+    background-color:#5499c7;
+    border: 2px solid #011638;
     position: relative;
     box-sizing: border-box;
 }
 
 .blue {
-    background-color: #2e86c1;
+    border: 2px solid #011638;
+    background-color: #364156;
     overflow: hidden;
     box-sizing: border-box;
 }
 
 .green {
-    background-color: green;
+    border: 2px solid#011638;
+    background-color: #214E34;
 }
 
 @media (max-width: 768px) {
