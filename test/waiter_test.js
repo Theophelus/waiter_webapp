@@ -18,27 +18,75 @@ describe('WAITER AVAILABILITY WEB APP', () => {
         await pool.query("delete from days_booked;");
     });
 
-    it('Should all days of the week', async function(){
+    it('Should all days of the week', async function () {
 
-        assert.deepEqual(await newWaiter.getWeekdays([]), [ { "weekday": 'Monday' },
-        {"weekday": "Tuesday" },
-        {"weekday": "Wednesday" },
-        {"weekday": "Thursday" },
-        {"weekday": "Friday" },
-        {"weekday": "Saturday" },
-        {"weekday": "Sunday" }]);
+        assert.deepEqual(await newWaiter.getWeekdays([]), [{
+                "weekday": 'Monday'
+            },
+            {
+                "weekday": "Tuesday"
+            },
+            {
+                "weekday": "Wednesday"
+            },
+            {
+                "weekday": "Thursday"
+            },
+            {
+                "weekday": "Friday"
+            },
+            {
+                "weekday": "Saturday"
+            },
+            {
+                "weekday": "Sunday"
+            }
+        ]);
     })
+    it('Should check if the names is already if it does return true', async () => {
+        await newWaiter.checkNames('ace');
+        assert.deepEqual(await newWaiter.getNames('ace'));
+    });
+
+
     it('Should set names into the database', async () => {
+
         assert.equal(await newWaiter.setWaiters('Anele'));
     });
     it('Should be able to get entered name with checked working days and enter names in the database', async () => {
         await newWaiter.setWAiterAndDays('ace', ['Monday', 'Thursday']);
-        assert.deepEqual(await newWaiter.getCheckedDays('ace'), [ { weekday: 'Monday', checked: 'checked' },
-        { weekday: 'Tuesday' },
-        { weekday: 'Wednesday' },
-        { weekday: 'Thursday', checked: 'checked' },
-        { weekday: 'Friday' },
-        { weekday: 'Saturday' },
-        { weekday: 'Sunday' } ] );
+        assert.deepEqual(await newWaiter.getCheckedDays('ace'), [{
+                weekday: 'Monday',
+                checked: 'checked'
+            },
+            {
+                weekday: 'Tuesday'
+            },
+            {
+                weekday: 'Wednesday'
+            },
+            {
+                weekday: 'Thursday',
+                checked: 'checked'
+            },
+            {
+                weekday: 'Friday'
+            },
+            {
+                weekday: 'Saturday'
+            },
+            {
+                weekday: 'Sunday'
+            }
+        ]);
     });
+
+    // it('Should be able set waiter id and and weekday in into days booked table ', async () => {
+
+    // //    await newWaiter.setWaiters('Anele')
+
+    //     await newWaiter.setWAiterAndDays('Anele', ['Monday', 'Tuesday'])
+    //     let checkedDays = await newWaiter.getCheckedDays()
+    //     console.log(checkedDays)
+    // });
 });

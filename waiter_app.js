@@ -25,7 +25,7 @@ module.exports = (pool) => {
             await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [waiterID.id]);
 
             for (const dayId of setWeekdays) {
-                console.log(dayId);
+                // console.log(dayId);
                 let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
                 await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID.id, foundId.rows[0].id]);
             }
@@ -36,10 +36,13 @@ module.exports = (pool) => {
             let waiterID = waiterName;
             for (const dayId of setWeekdays) {
                 let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
+                console.log(foundId);
                 await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID.id, foundId.rows[0].id])
+                console.log(dayId);
             }
         }
     }
+
     let checkNames = async (waiterName) => {
         if (waiterName != '' || waiterName !== undefined) {
             checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
@@ -68,7 +71,7 @@ module.exports = (pool) => {
                 // return workingShifts
             };
         };
-        console.log(getAllDays);
+        //    console.log(getAllDays);
         return getAllDays;
 
     }
@@ -84,7 +87,7 @@ module.exports = (pool) => {
         for (const days of getDays) {
             let results = await pool.query('SELECT waiter.names as names FROM days_booked INNER JOIN waiter ON days_booked.waiter_id = waiter.id INNER JOIN weekdays ON days_booked.weekdays_id = weekdays.id where weekdays.weekday = $1', [days.weekday]);
             days.waiter = results.rows;
-            console.log(days.names = results.rows);
+            // console.log(days.names = results.rows);
             if (days.waiter.length === 3) {
                 days['colors'] = 'green';
             } else {
