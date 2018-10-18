@@ -14,8 +14,7 @@ let newWaiter = Waiter(pool);
 describe('WAITER AVAILABILITY WEB APP', () => {
     beforeEach(async () => {
         // clean the tables before each test run
-        // await pool.query("delete from waiter;");
-        // await pool.query("delete from weekdays;");
+        await pool.query("delete from waiter;");
         await pool.query("delete from days_booked;");
     });
 
@@ -29,8 +28,17 @@ describe('WAITER AVAILABILITY WEB APP', () => {
         {"weekday": "Saturday" },
         {"weekday": "Sunday" }]);
     })
-    it('Should be able to check names and enter names in the database', async () => {
-        // await newWaiter.getNames('Anele')
+    it('Should set names into the database', async () => {
         assert.equal(await newWaiter.setWaiters('Anele'));
+    });
+    it('Should be able to get entered name with checked working days and enter names in the database', async () => {
+        await newWaiter.setWAiterAndDays('ace', ['Monday', 'Thursday']);
+        assert.deepEqual(await newWaiter.getCheckedDays('ace'), [ { weekday: 'Monday', checked: 'checked' },
+        { weekday: 'Tuesday' },
+        { weekday: 'Wednesday' },
+        { weekday: 'Thursday', checked: 'checked' },
+        { weekday: 'Friday' },
+        { weekday: 'Saturday' },
+        { weekday: 'Sunday' } ] );
     });
 });

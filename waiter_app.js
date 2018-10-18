@@ -4,7 +4,6 @@ module.exports = (pool) => {
     //define function to get all weekdays
     let getWeekdays = async () => {
         let days = await pool.query('SELECT weekday FROM weekdays');
-        console.log(days.rows);
         return days.rows;
     };
 
@@ -13,7 +12,6 @@ module.exports = (pool) => {
             let checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
             if (checkName.rowCount > 0) {} else {
                 await pool.query('INSERT INTO waiter(names) values($1)', [waiterName]);
-
                 // await getCheckedDays(waiterName);
             }
         }
@@ -24,7 +22,7 @@ module.exports = (pool) => {
             let waiterName = await getNames(setWaiter);
             let waiterID = waiterName;
 
-            await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [waiterID]);
+            await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [waiterID.id]);
 
             for (const dayId of setWeekdays) {
                 console.log(dayId);
@@ -42,7 +40,6 @@ module.exports = (pool) => {
             }
         }
     }
-
     let checkNames = async (waiterName) => {
         if (waiterName != '' || waiterName !== undefined) {
             checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
@@ -71,7 +68,7 @@ module.exports = (pool) => {
                 // return workingShifts
             };
         };
-        // console.log(getAllDays);
+        console.log(getAllDays);
         return getAllDays;
 
     }
