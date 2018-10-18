@@ -62,12 +62,14 @@ describe('WAITER AVAILABILITY WEB APP', () => {
         { weekday: 'Sunday' } ] );
     });
 
-    // it('Should be able set waiter id and and weekday in into days booked table ', async () => {
-
-    // //    await newWaiter.setWaiters('Anele')
-
-    //     await newWaiter.setWAiterAndDays('Anele', ['Monday', 'Tuesday'])
-    //     let checkedDays = await newWaiter.getCheckedDays()
-    //     console.log(checkedDays)
-    // });
+    it('Should be able to assign blue colors if there are three waiters available', async () => {
+        await newWaiter.setWAiterAndDays('sbu', ['Monday', 'Sunday'])
+        assert.deepEqual(await newWaiter.adminCheckWaiters(),[ { weekday: 'Monday', waiter: [{'names': 'sbu'}], colors: 'red' },
+        { weekday: 'Tuesday', waiter: [], colors: 'blue' },
+        { weekday: 'Wednesday', waiter: [], colors: 'blue' },
+        { weekday: 'Thursday', waiter: [], colors: 'blue' },
+        { weekday: 'Friday', waiter: [], colors: 'blue' },
+        { weekday: 'Saturday', waiter: [], colors: 'blue' },
+        { weekday: 'Sunday', waiter: [{'names': 'sbu'}], colors: 'red' } ])
+    });
 });

@@ -18,11 +18,12 @@ module.exports = (pool) => {
     };
 
     let setWAiterAndDays = async (setWaiter, setWeekdays) => {
+
         if (await checkNames(setWaiter)) {
             let waiterName = await getNames(setWaiter);
             let waiterID = waiterName;
 
-            await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [waiterID.id]);
+            await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [waiterID]);
 
             for (const dayId of setWeekdays) {
                 // console.log(dayId);
@@ -33,6 +34,7 @@ module.exports = (pool) => {
         } else {
             await setWaiters(setWaiter);
             let waiterName = await getNames(setWaiter);
+            // await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [waiterID]);
             let waiterID = waiterName;
             for (const dayId of setWeekdays) {
                 let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
@@ -101,6 +103,7 @@ module.exports = (pool) => {
                 }
             }
         }
+        // console.log(getDays);
         return getDays;
     }
     return {
