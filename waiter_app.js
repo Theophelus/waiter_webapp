@@ -36,9 +36,7 @@ module.exports = (pool) => {
             let waiterID = waiterName;
             for (const dayId of setWeekdays) {
                 let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
-                console.log(foundId);
                 await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID.id, foundId.rows[0].id])
-                console.log(dayId);
             }
         }
     }
@@ -71,7 +69,6 @@ module.exports = (pool) => {
                 // return workingShifts
             };
         };
-        //    console.log(getAllDays);
         return getAllDays;
 
     }
