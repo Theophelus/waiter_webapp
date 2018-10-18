@@ -18,7 +18,7 @@ describe('WAITER AVAILABILITY WEB APP', () => {
         await pool.query("delete from days_booked;");
     });
 
-    it('Should all days of the week', async function () {
+    it('Should be able to return all days of the week', async function () {
 
         assert.deepEqual(await newWaiter.getWeekdays([]), [{
                 "weekday": 'Monday'
