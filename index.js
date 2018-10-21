@@ -51,8 +51,8 @@ app.get('/waiters/:names', async (req, res, next) => {
         // console.log(await waiter_app.getCheckedDays(waiterNames));
 
         if (await waiter_app.checkNames(waiterNames)) {
-            let user_name = waiter_app.getNames(waiterNames);
             let displayDays = await waiter_app.getCheckedDays(waiterNames);
+            let user_name = waiter_app.getNames(waiterNames);
             req.flash('info', `${waiterNames} YOU WILL BE WORKING ON THESES SELECTED DAYS..!`);
             res.render('waiters', {
                 user_name,
@@ -62,7 +62,7 @@ app.get('/waiters/:names', async (req, res, next) => {
             req.flash('info', `${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
             res.render('waiters', {
                 user_name: waiterNames,
-                displayDays: await waiter_app.getCheckedDays(waiterNames)
+                displayDays: await waiter_app.getWeekdays(waiterNames)
 
             });
         }
@@ -77,13 +77,10 @@ app.post('/waiters/:names', async (req, res, next) => {
     try {
         let waiterNames = req.params.names;
         console.log(waiterNames);
-        let {
-            days
-        } = req.body;
+        let days =Array.isArray(req.body.days) ? req.body.days : [req.body.days];
         if (await waiter_app.checkNames(waiterNames)) {
-            await waiter_app.setWAiterAndDays(days, waiterNames);
+            await waiter_app.setWAiterAndDays(waiterNames, days);
             let waiter = await waiter_app.getNames(waiterNames);
-            // await waiter_app.getCheckedDays(waiterNames)
             res.redirect('/waiters/' + waiter.names);
         } else {
             await waiter_app.setWAiterAndDays(waiterNames, days);
