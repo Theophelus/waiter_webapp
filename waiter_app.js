@@ -88,15 +88,11 @@ module.exports = (pool) => {
             if (days.waiter.length === 3) {
                 days['colors'] = 'green';
             } else {
-                if (days.waiter.length > 3 || days.waiter.length === 0) {
+                if (days.waiter.length > 3) {
                     days['colors'] = 'blue';
                 } else {
-                    if (days.waiter.length > 3 || days.waiter.length === 0) {
-                        days['colors'] = 'blue';
-                    } else {
-                        if (days.waiter.length < 3 || days.waiter.length === 0) {
-                            days['colors'] = 'red';
-                        }
+                    if (days.waiter.length < 3 || days.waiter.length === 0) {
+                        days['colors'] = 'red';
                     }
                 }
             }
