@@ -153,7 +153,7 @@ input[type="checkbox"]:checked+label:before {
 /* colors for days  */
 
 .red {
-    background-color: #364156;
+    background-color: #E74C3C;
     border: 2px solid #011638;
     position: relative;
     box-sizing: border-box;
@@ -161,7 +161,7 @@ input[type="checkbox"]:checked+label:before {
 
 .blue {
     border: 2px solid #011638;
-    background-color: #E74C3C;
+    background-color: #364156;
     overflow: hidden;
     box-sizing: border-box;
 }

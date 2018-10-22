@@ -62,14 +62,14 @@ describe('WAITER AVAILABILITY WEB APP', () => {
         { weekday: 'Sunday' } ] );
     });
 
-    it('Should be able to assign blue colors if there are three waiters available', async () => {
+    it('Should be able to assign blue colors if there are olny one waiters available for each days', async () => {
         await newWaiter.setWAiterAndDays('sbu', ['Monday', 'Sunday'])
-        assert.deepEqual(await newWaiter.adminCheckWaiters(),[ { weekday: 'Monday', waiter: [{'names': 'sbu'}], colors: 'red' },
+        assert.deepEqual(await newWaiter.adminCheckWaiters(),[ { weekday: 'Monday', waiter: [{'names': 'sbu'}], colors: 'blue' },
         { weekday: 'Tuesday', waiter: [], colors: 'blue' },
         { weekday: 'Wednesday', waiter: [], colors: 'blue' },
         { weekday: 'Thursday', waiter: [], colors: 'blue' },
         { weekday: 'Friday', waiter: [], colors: 'blue' },
         { weekday: 'Saturday', waiter: [], colors: 'blue' },
-        { weekday: 'Sunday', waiter: [{'names': 'sbu'}], colors: 'red' } ])
+        { weekday: 'Sunday', waiter: [{'names': 'sbu'}], colors: 'blue' } ])
     });
 });
