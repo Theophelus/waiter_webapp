@@ -29,13 +29,19 @@ module.exports = (pool) => {
                 let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
                 await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID, foundId.rows[0].id]);
             }
+            
         } else {
             await setWaiters(setWaiter);
             let waiterName = await getNames(setWaiter);
             let waiterID = waiterName.id;
             for (const dayId of setWeekdays) {
-                let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
-                await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID, foundId.rows[0].id])
+                if (dayId) {
+                    let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
+                    await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID, foundId.rows[0].id])
+                } else {
+                    return false;
+                }
+
             }
 
         }

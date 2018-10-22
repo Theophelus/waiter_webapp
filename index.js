@@ -48,8 +48,6 @@ app.use(express.static('public'));
 app.get('/waiters/:names', async (req, res, next) => {
     try {
         let waiterNames = req.params.names;
-        // console.log(await waiter_app.getCheckedDays(waiterNames));
-
         if (await waiter_app.checkNames(waiterNames)) {
             let displayDays = await waiter_app.getCheckedDays(waiterNames);
             let user_name = waiter_app.getNames(waiterNames);
@@ -72,11 +70,11 @@ app.get('/waiters/:names', async (req, res, next) => {
 
 // Define a POST Route Handler to Send the days the waiter can work to the server.
 app.post('/waiters/:names', async (req, res, next) => {
-    console.log(true);
     try {
         let waiterNames = req.params.names;
         console.log(waiterNames);
         let days = Array.isArray(req.body.days) ? req.body.days : [req.body.days];
+
         if (await waiter_app.checkNames(waiterNames)) {
             await waiter_app.setWAiterAndDays(waiterNames, days);
             let waiter = await waiter_app.getNames(waiterNames);
