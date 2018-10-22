@@ -67,7 +67,7 @@ app.get('/waiters/:names', async (req, res, next) => {
             });
         }
     } catch (err) {
-        console.error('acatch the error', err);
+        console.error('catch the error', err);
     }
 });
 
@@ -77,7 +77,7 @@ app.post('/waiters/:names', async (req, res, next) => {
     try {
         let waiterNames = req.params.names;
         console.log(waiterNames);
-        let days =Array.isArray(req.body.days) ? req.body.days : [req.body.days];
+        let days = Array.isArray(req.body.days) ? req.body.days : [req.body.days];
         if (await waiter_app.checkNames(waiterNames)) {
             await waiter_app.setWAiterAndDays(waiterNames, days);
             let waiter = await waiter_app.getNames(waiterNames);
@@ -102,7 +102,15 @@ app.get('/days', async (req, res) => {
         displayDays: await waiter_app.adminCheckWaiters()
     });
 });
-
+app.get('/delete', async (req, res, next) => {
+    try {
+        await waiter_app.deletewaiters()
+        // req.flash('success', 'All Registrayions Have Been Deleted Successfull...!');
+        res.redirect('/days');
+    } catch (error) {
+        console.error('catch error', error);
+    }
+});
 
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {

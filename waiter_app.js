@@ -100,6 +100,11 @@ module.exports = (pool) => {
         // console.log(getDays);
         return getDays;
     }
+
+    let deletewaiters = async () => {
+        let waiterDelete = await pool.query('DELETE FROM waiter');
+        return waiterDelete.rows;
+    }
     return {
         getWeekdays,
         setWaiters,
@@ -107,6 +112,7 @@ module.exports = (pool) => {
         getCheckedDays,
         getNames,
         checkNames,
-        adminCheckWaiters
+        adminCheckWaiters,
+        deletewaiters
     }
 };
