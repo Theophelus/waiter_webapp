@@ -89,7 +89,6 @@ app.post('/waiters/:names', async (req, res, next) => {
                 displayDays: await waiter_app.getCheckedDays(waiterNames)
             });
         }
-        // res.redirect('/waiters/' + waiterNames);
     } catch (err) {
         console.error('Catch the error', err);
     }
