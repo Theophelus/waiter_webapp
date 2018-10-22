@@ -72,4 +72,31 @@ describe('WAITER AVAILABILITY WEB APP', () => {
         { weekday: 'Saturday', waiter: [], colors: 'blue' },
         { weekday: 'Sunday', waiter: [{'names': 'sbu'}], colors: 'blue' } ])
     });
+    it('Should be able to assign green colors if there three waiters in one day', async () => {
+        await newWaiter.setWAiterAndDays('sbu', ['Monday', 'Sunday']);
+        await newWaiter.setWAiterAndDays('rara', ['Monday', 'Friday']);
+        await newWaiter.setWAiterAndDays('ace', ['Monday', 'Saturday']);
+
+        assert.deepEqual(await newWaiter.adminCheckWaiters(),[ { weekday: 'Monday', waiter: [{'names': 'sbu'}, {'names': 'rara'},{'names': 'ace'}], colors: 'green' },
+        { weekday: 'Tuesday', waiter: [], colors: 'blue' },
+        { weekday: 'Wednesday', waiter: [], colors: 'blue' },
+        { weekday: 'Thursday', waiter: [], colors: 'blue' },
+        { weekday: 'Friday', waiter: [{'names': 'rara'}], colors: 'blue' },
+        { weekday: 'Saturday', waiter: [{'names': 'ace'}], colors: 'blue' },
+        { weekday: 'Sunday', waiter: [{'names': 'sbu'}], colors: 'blue' } ])
+    });
+    it('Should be able to assign red colors if waiters have over substribed', async () => {
+        await newWaiter.setWAiterAndDays('sbu', ['Monday', 'Sunday']);
+        await newWaiter.setWAiterAndDays('rara', ['Monday', 'Friday']);
+        await newWaiter.setWAiterAndDays('ace', ['Monday', 'Friday']);
+        await newWaiter.setWAiterAndDays('lihle', ['Monday', 'Friday']);
+
+        assert.deepEqual(await newWaiter.adminCheckWaiters(),[ { weekday: 'Monday', waiter: [{'names': 'sbu'}, {'names': 'rara'},{'names': 'ace'},{'names': 'lihle'}], colors: 'red' },
+        { weekday: 'Tuesday', waiter: [], colors: 'blue' },
+        { weekday: 'Wednesday', waiter: [], colors: 'blue' },
+        { weekday: 'Thursday', waiter: [], colors: 'blue' },
+        { weekday: 'Friday', waiter: [{'names': 'rara'},{'names': 'ace'},{'names': 'lihle'}], colors: 'green' },
+        { weekday: 'Saturday', waiter: [], colors: 'blue' },
+        { weekday: 'Sunday', waiter: [{'names': 'sbu'}], colors: 'blue' } ])
+    });
 });
