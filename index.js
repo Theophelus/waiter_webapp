@@ -63,7 +63,6 @@ app.get('/waiters/:names', async (req, res, next) => {
             res.render('waiters', {
                 user_name: waiterNames,
                 displayDays: await waiter_app.getWeekdays(waiterNames)
-
             });
         }
     } catch (err) {
@@ -81,7 +80,7 @@ app.post('/waiters/:names', async (req, res, next) => {
         if (await waiter_app.checkNames(waiterNames)) {
             await waiter_app.setWAiterAndDays(waiterNames, days);
             let waiter = await waiter_app.getNames(waiterNames);
-            res.redirect('/waiters/' + waiter.names);
+            res.redirect('/waiters/' + waiterNames);
         } else {
             await waiter_app.setWAiterAndDays(waiterNames, days);
             req.flash('info', `${waiterNames}, THESE ARE THE WORKING DAYS YOU HAVE SELECTED.!`);
@@ -90,7 +89,7 @@ app.post('/waiters/:names', async (req, res, next) => {
                 displayDays: await waiter_app.getCheckedDays(waiterNames)
             });
         }
-
+        // res.redirect('/waiters/' + waiterNames);
     } catch (err) {
         console.error('Catch the error', err);
     }
