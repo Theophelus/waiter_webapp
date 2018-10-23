@@ -5,6 +5,7 @@ const flash = require('express-flash');
 const session = require('express-session');
 const Waiter_app = require('./waiter_app');
 const pg = require("pg");
+let WaiterRoutes = require('./routes/waiter_routes');
 const Pool = pg.Pool;
 
 //define instances
@@ -31,6 +32,8 @@ const pool = new Pool({
 });
 // define instance of factory function
 let waiter_app = Waiter_app(pool);
+let waiterRoutes = WaiterRoutes(waiter_app)
+
 // configure express handlebars
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
@@ -45,69 +48,13 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 //define a GET Route Hadler to get waiter name o
-app.get('/waiters/:names', async (req, res, next) => {
-    try {
-        let waiterNames = req.params.names;
-        if (await waiter_app.checkNames(waiterNames)) {
-            let displayDays = await waiter_app.getCheckedDays(waiterNames);
-            // let user_name = await waiter_app.getNames(waiterNames);
-            // console.log(user_name);
-            req.flash('info', `${waiterNames} YOU WILL BE WORKING ON THESES SELECTED DAYS..!`);
-            res.render('waiters', {
-                user_name: waiterNames,
-                displayDays
-            })
-        } else {
-            req.flash('info', `${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
-            res.render('waiters', {
-                user_name: waiterNames,
-                displayDays: await waiter_app.getWeekdays(waiterNames)
-            });
-        }
-    } catch (err) {
-        console.error('catch the error', err);
-    }
-});
-
+app.get('/waiters/:names', waiterRoutes.getWaiter);
 // Define a POST Route Handler to Send the days the waiter can work to the server.
-app.post('/waiters/:names', async (req, res, next) => {
-    try {
-
-        let waiterNames = req.params.names;
-        let days = Array.isArray(req.body.days) ? req.body.days : [req.body.days];
-
-        if (await waiter_app.checkNames(waiterNames)) {
-            await waiter_app.setWAiterAndDays(waiterNames, days);
-            await waiter_app.getNames(waiterNames);
-            res.redirect('/waiters/' + waiterNames);
-        } else {
-            await waiter_app.setWAiterAndDays(waiterNames, days);
-            req.flash('info', `${waiterNames}, THESE ARE THE WORKING DAYS YOU HAVE SELECTED.!`);
-            res.render('waiters', {
-                user_name: waiterNames,
-                displayDays: await waiter_app.getCheckedDays(waiterNames)
-            });
-        }
-    } catch (err) {
-        console.error('Catch the error', err);
-    }
-});
-
-// // Define a GET route handler to show which days waiters are available..
-app.get('/days', async (req, res) => {
-    res.render('days', {
-        displayDays: await waiter_app.adminCheckWaiters()
-    });
-});
-app.get('/delete', async (req, res, next) => {
-    try {
-        await waiter_app.deletewaiters()
-        // req.flash('success', 'All Registrayions Have Been Deleted Successfull...!');
-        res.redirect('/days');
-    } catch (error) {
-        console.error('catch error', error);
-    }
-});
+app.post('/waiters/:names', waiterRoutes.setWaitersAndDays);
+// Define a GET route handler to show which days waiters are available..
+app.get('/days', waiterRoutes.getwaitersWithDays);
+//Define a GET Route handler to delete all waiters in the days page
+app.get('/delete', waiterRoutes.deleteWaiters);
 
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {
