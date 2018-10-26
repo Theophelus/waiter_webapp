@@ -8,8 +8,8 @@ module.exports = (pool) => {
     };
 
     let setWaiters = async (waiterName) => {
-        waiterName = waiterName.toLowerCase(); 
-            if (waiterName != '' || waiterName !== undefined) {
+        waiterName = waiterName.toLowerCase();
+        if (waiterName != '' || waiterName !== undefined) {
             let checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
             if (checkName.rowCount > 0) {} else {
                 await pool.query('INSERT INTO waiter(names) values($1)', [waiterName]);
@@ -21,6 +21,11 @@ module.exports = (pool) => {
     let setWAiterAndDays = async (setWaiter, setWeekdays) => {
 
         setWaiter = setWaiter.toLowerCase();
+
+        if (setWaiter == undefined || setWeekdays == '') {
+            return false;
+        }
+
         if (await checkNames(setWaiter)) {
             let waiterName = await getNames(setWaiter);
             let waiterID = waiterName.id;
@@ -31,7 +36,7 @@ module.exports = (pool) => {
                 let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
                 await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID, foundId.rows[0].id]);
             }
-            
+
         } else {
             await setWaiters(setWaiter);
             let waiterName = await getNames(setWaiter);
