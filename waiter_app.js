@@ -8,7 +8,8 @@ module.exports = (pool) => {
     };
 
     let setWaiters = async (waiterName) => {
-        if (waiterName != '' || waiterName !== undefined) {
+        waiterName = waiterName.toLowerCase(); 
+            if (waiterName != '' || waiterName !== undefined) {
             let checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
             if (checkName.rowCount > 0) {} else {
                 await pool.query('INSERT INTO waiter(names) values($1)', [waiterName]);
@@ -19,6 +20,7 @@ module.exports = (pool) => {
 
     let setWAiterAndDays = async (setWaiter, setWeekdays) => {
 
+        setWaiter = setWaiter.toLowerCase();
         if (await checkNames(setWaiter)) {
             let waiterName = await getNames(setWaiter);
             let waiterID = waiterName.id;
@@ -48,6 +50,7 @@ module.exports = (pool) => {
     }
 
     let checkNames = async (waiterName) => {
+        waiterName = waiterName.toLowerCase();
         if (waiterName != '' || waiterName !== undefined) {
             checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
             if (checkName.rowCount > 0) {
@@ -59,6 +62,7 @@ module.exports = (pool) => {
     }
 
     let getCheckedDays = async (waiterName) => {
+        waiterName = waiterName.toLowerCase();
         //define a variable to get all that getWaiterName
         let getAllDays = await getWeekdays();
         let getShifts = await pool.query('SELECT waiter.names, weekdays.weekday FROM days_booked INNER JOIN waiter ON days_booked.waiter_id = waiter.id INNER JOIN weekdays ON days_booked.weekdays_id = weekdays.id where names= $1', [waiterName]);
@@ -80,6 +84,7 @@ module.exports = (pool) => {
     }
 
     let getNames = async (waiterName) => {
+        waiterName = waiterName.toLowerCase();
         let getWaiterNames = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
         return getWaiterNames.rows[0];
     }
