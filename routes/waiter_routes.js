@@ -3,18 +3,19 @@ module.exports = (waiter_app) => {
 
     let getWaiter = async (req, res, next) => {
         try {
+            req.flash('msg', 'PLEASE SELECT WORKING DAYS..!');
             let waiterNames = req.params.names;
             if (await waiter_app.checkNames(waiterNames)) {
                 let displayDays = await waiter_app.getCheckedDays(waiterNames);
-                // let user_name = await waiter_app.getNames(waiterNames);
+                await waiter_app.getNames(waiterNames);
                 // console.log(user_name);
-                req.flash('info', `${waiterNames} YOU WILL BE WORKING ON THESES SELECTED DAYS..!`);
+                req.flash('info', `${waiterNames} YOU Will Be Working On These Selected Day..!`);
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays
                 })
             } else {
-                req.flash('info', `${waiterNames} BOOK YOUR SHIFTS FOR THE WEEK..!`);
+                req.flash('info', `${waiterNames} Book Your Shifts For The Week..!`);
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays: await waiter_app.getWeekdays(waiterNames)
@@ -25,23 +26,29 @@ module.exports = (waiter_app) => {
         }
     }
     let setWaitersAndDays = async (req, res, next) => {
+        req.flash('msg', 'You have selected these following days');
         try {
-    
+
             let waiterNames = req.params.names;
             let days = Array.isArray(req.body.days) ? req.body.days : [req.body.days];
-    
+
+            // if (waiterNames == undefined || days == '') {
+            //     return false;
+            // }
+
             if (await waiter_app.checkNames(waiterNames)) {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
                 await waiter_app.getNames(waiterNames);
                 res.redirect('/waiters/' + waiterNames);
             } else {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
-                req.flash('info', `${waiterNames}, THESE ARE THE WORKING DAYS YOU HAVE SELECTED.!`);
+                req.flash('info', `${waiterNames}, these are the working shifts you have selected..!`);
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays: await waiter_app.getCheckedDays(waiterNames)
                 });
             }
+
         } catch (err) {
             console.error('Catch the error', err);
         }
@@ -52,12 +59,12 @@ module.exports = (waiter_app) => {
             res.render('days', {
                 displayDays: await waiter_app.adminCheckWaiters()
             });
-    
+
         } catch (error) {
             console.error('Chetch error', error);
         }
     };
-    let deleteWaiters =  async (req, res, next) => {
+    let deleteWaiters = async (req, res, next) => {
         try {
             await waiter_app.deletewaiters()
             // req.flash('success', 'All Registrayions Have Been Deleted Successfull...!');
