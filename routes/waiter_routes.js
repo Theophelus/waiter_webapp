@@ -3,7 +3,7 @@ module.exports = (waiter_app) => {
 
     let getWaiter = async (req, res, next) => {
         try {
-            req.flash('msg', 'PLEASE SELECT WORKING DAYS..!');
+            // req.flash('msg', 'PLEASE SELECT WORKING DAYS..!');
             let waiterNames = req.params.names;
             if (await waiter_app.checkNames(waiterNames)) {
                 let displayDays = await waiter_app.getCheckedDays(waiterNames);
@@ -32,10 +32,9 @@ module.exports = (waiter_app) => {
             let waiterNames = req.params.names;
             let days = Array.isArray(req.body.days) ? req.body.days : [req.body.days];
 
-            // if (waiterNames == undefined || days == '') {
-            //     return false;
-            // }
-
+            if (waiterNames == undefined || days == '') {
+                return res.redirect('/waiters/' + waiterNames);
+            } else
             if (await waiter_app.checkNames(waiterNames)) {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
                 await waiter_app.getNames(waiterNames);

@@ -22,10 +22,9 @@ module.exports = (pool) => {
 
         setWaiter = setWaiter.toLowerCase();
 
-        if (setWaiter == undefined || setWeekdays == '') {
-            return false;
-        }
-
+        // if (setWaiter == undefined || setWeekdays == '') {
+        //     return false;
+        // } else
         if (await checkNames(setWaiter)) {
             let waiterName = await getNames(setWaiter);
             let waiterID = waiterName.id;
