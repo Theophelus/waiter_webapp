@@ -40,6 +40,9 @@ module.exports = (pool) => {
             await setWaiters(setWaiter);
             let waiterName = await getNames(setWaiter);
             let waiterID = waiterName.id;
+
+            await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [waiterID]);
+
             for (const dayId of setWeekdays) {
                 if (dayId) {
                     let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
