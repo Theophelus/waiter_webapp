@@ -3,30 +3,31 @@ module.exports = (waiter_app) => {
 
     let getWaiter = async (req, res, next) => {
         try {
-            // req.flash('msg', 'PLEASE SELECT WORKING DAYS..!');
             let waiterNames = req.params.names;
             if (await waiter_app.checkNames(waiterNames)) {
                 let displayDays = await waiter_app.getCheckedDays(waiterNames);
                 await waiter_app.getNames(waiterNames);
                 // console.log(user_name);
-                req.flash('info', `${waiterNames} YOU Will Be Working On These Selected Day..!`);
+                req.flash('info', 'you will be working on these selected days..!');
+                req.flash('msg', 'do you want to do any updates in your shifts..?');
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays
                 })
             } else {
-                req.flash('info', `${waiterNames} Book Your Shifts For The Week..!`);
+                req.flash('info', 'book your shifts for the week..!');
+                req.flash('msg', 'PLEASE SELECT WORKING DAYS..!');
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays: await waiter_app.getWeekdays(waiterNames)
                 });
             }
+
         } catch (err) {
             console.error('catch the error', err);
         }
     }
     let setWaitersAndDays = async (req, res, next) => {
-        req.flash('msg', 'You have selected these following days');
         try {
 
             let waiterNames = req.params.names;
@@ -38,10 +39,13 @@ module.exports = (waiter_app) => {
             if (await waiter_app.checkNames(waiterNames)) {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
                 await waiter_app.getNames(waiterNames);
+                // req.flash('info', `${waiterNames}, do you want to do any updates in your shifts..?`);
+                // req.flash('msg', 'You have selected these following days..!');
                 res.redirect('/waiters/' + waiterNames);
             } else {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
-                req.flash('info', `${waiterNames}, these are the working shifts you have selected..!`);
+                req.flash('info', 'these are the working shifts you have selected..!');
+                req.flash('msg', 'You have selected these following days..!');
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays: await waiter_app.getCheckedDays(waiterNames)

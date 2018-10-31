@@ -14,9 +14,13 @@
         <form action="/waiters/{{user_name}}" method="post">
             <div class="week_days">
                 <h5>WELCOME</h5>
-                <h6 style="margin-left: 10px;"><span style="font-size: 20px; color:  #5499c7; text-transform:capitalize">
+                <h6 style="margin-left: 10px;">
+                    {{#if user_name}}
+                    <span style="font-size: 20px; color:  #5499c7; text-transform:capitalize">{{user_name}}</span>
+                    <span style="font-size: 20px; color: #5499c7;">
                         {{messages.info}}
                     </span>
+                    {{/if}}
                 </h6>
                 <br>
             </div>
