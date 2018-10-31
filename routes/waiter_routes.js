@@ -16,7 +16,7 @@ module.exports = (waiter_app) => {
                 })
             } else {
                 req.flash('info', 'book your shifts for the week..!');
-                req.flash('msg', 'PLEASE SELECT WORKING DAYS..!');
+                req.flash('msg', 'Please select working days..!');
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays: await waiter_app.getWeekdays(waiterNames)
