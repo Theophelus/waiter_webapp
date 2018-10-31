@@ -6,7 +6,7 @@ module.exports = (waiter_app) => {
             let waiterNames = req.params.names;
             if (await waiter_app.checkNames(waiterNames)) {
                 let displayDays = await waiter_app.getCheckedDays(waiterNames);
-                await waiter_app.getNames(waiterNames);
+                // await waiter_app.getNames(waiterNames);
 
                 req.flash('info', 'you will be working on these selected days..!');
                 req.flash('msg', 'Days selected..!');
@@ -19,7 +19,7 @@ module.exports = (waiter_app) => {
                 req.flash('msg', 'Please select working days..!');
                 res.render('waiters', {
                     user_name: waiterNames,
-                    displayDays: await waiter_app.getWeekdays(waiterNames)
+                    displayDays: await waiter_app.getCheckedDays(waiterNames)
                 });
             }
 
@@ -33,13 +33,12 @@ module.exports = (waiter_app) => {
             let waiterNames = req.params.names;
             let days = Array.isArray(req.body.days) ? req.body.days : [req.body.days];
 
-            if (waiterNames == undefined || days == '' || !days) {
+            if (waiterNames == undefined || days == '') {
                  res.redirect('/waiters/' + waiterNames);
             }
             if (await waiter_app.checkNames(waiterNames)) {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
-                await waiter_app.getNames(waiterNames);
-                // req.flash('msg', 'You have selected these following days..!');
+                // await waiter_app.getNames(waiterNames);
                 res.redirect('/waiters/' + waiterNames);
 
             } else {
