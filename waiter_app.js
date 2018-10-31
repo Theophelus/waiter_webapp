@@ -21,19 +21,21 @@ module.exports = (pool) => {
     let setWAiterAndDays = async (setWaiter, setWeekdays) => {
 
         setWaiter = setWaiter.toLowerCase();
-        if (setWaiter == undefined || setWAiterAndDays == '') {
-            return false;
-        }
+        // if (setWAiterAndDays == '') {
+        //     return false;
+        // }
 
         if (await checkNames(setWaiter)) {
             let waiterName = await getNames(setWaiter);
             let waiterID = waiterName.id;
+            console.log(waiterID);
 
             await pool.query('DELETE FROM days_booked WHERE waiter_id = $1', [waiterID]);
 
             for (const dayId of setWeekdays) {
                 let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
-                await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID, foundId.rows[0].id]);
+                foundId =foundId.rows[0].id
+                await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID, foundId]);
             }
 
         } else {
@@ -42,28 +44,23 @@ module.exports = (pool) => {
             let waiterID = waiterName.id;
 
             for (const dayId of setWeekdays) {
-                if (dayId) {
-                    let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
-                    await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID, foundId.rows[0].id])
-                } else {
-                    return false;
-                }
-
+                let foundId = await pool.query('SELECT id From weekdays WHERE weekday=$1', [dayId]);
+                foundId = foundId.rows[0].id;
+                await pool.query('INSERT INTO days_booked(waiter_id, weekdays_id) VALUES($1, $2)', [waiterID, foundId])
             }
-
         }
     }
 
     let checkNames = async (waiterName) => {
         waiterName = waiterName.toLowerCase();
-        if (waiterName != '' || waiterName !== undefined) {
-            checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
-            if (checkName.rowCount > 0) {
-                return true;
-            } else {
-                return false;
-            }
+        // if (waiterName != '' || waiterName !== undefined) {
+        checkName = await pool.query('SELECT * FROM waiter WHERE names = $1', [waiterName]);
+        if (checkName.rowCount > 0) {
+            return true;
+        } else {
+            return false;
         }
+        // }
     }
 
     let getCheckedDays = async (waiterName) => {

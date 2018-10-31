@@ -33,12 +33,12 @@ module.exports = (waiter_app) => {
             let waiterNames = req.params.names;
             let days = Array.isArray(req.body.days) ? req.body.days : [req.body.days];
 
-            if (waiterNames == undefined || days == '') {
-                 res.redirect('/waiters/' + waiterNames);
+            if (days == '') {
+                res.redirect('/waiters/' + waiterNames);
             }
             if (await waiter_app.checkNames(waiterNames)) {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
-                // await waiter_app.getNames(waiterNames);
+                await waiter_app.getNames(waiterNames);
                 res.redirect('/waiters/' + waiterNames);
 
             } else {
