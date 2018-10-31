@@ -7,9 +7,9 @@ module.exports = (waiter_app) => {
             if (await waiter_app.checkNames(waiterNames)) {
                 let displayDays = await waiter_app.getCheckedDays(waiterNames);
                 await waiter_app.getNames(waiterNames);
-                // console.log(user_name);
+
                 req.flash('info', 'you will be working on these selected days..!');
-                req.flash('msg', 'do you want to do any updates in your shifts..?');
+                req.flash('msg', 'Do you want to do updates in your working shifts..?');
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays
@@ -39,9 +39,9 @@ module.exports = (waiter_app) => {
             if (await waiter_app.checkNames(waiterNames)) {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
                 await waiter_app.getNames(waiterNames);
-                // req.flash('info', `${waiterNames}, do you want to do any updates in your shifts..?`);
                 // req.flash('msg', 'You have selected these following days..!');
                 res.redirect('/waiters/' + waiterNames);
+
             } else {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
                 req.flash('info', 'these are the working shifts you have selected..!');

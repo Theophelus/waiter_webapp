@@ -21,6 +21,9 @@ module.exports = (pool) => {
     let setWAiterAndDays = async (setWaiter, setWeekdays) => {
 
         setWaiter = setWaiter.toLowerCase();
+        if (setWaiter == undefined || setWAiterAndDays == '') {
+            return false;
+        }
 
         if (await checkNames(setWaiter)) {
             let waiterName = await getNames(setWaiter);
