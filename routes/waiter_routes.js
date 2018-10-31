@@ -9,7 +9,7 @@ module.exports = (waiter_app) => {
                 await waiter_app.getNames(waiterNames);
 
                 req.flash('info', 'you will be working on these selected days..!');
-                // req.flash('msg', 'Do you want to do updates in your working shifts..?');
+                req.flash('msg', 'Days selected..!');
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays
