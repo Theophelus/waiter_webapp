@@ -9,7 +9,7 @@ module.exports = (waiter_app) => {
                 await waiter_app.getNames(waiterNames);
 
                 req.flash('info', 'you will be working on these selected days..!');
-                req.flash('msg', 'Do you want to do updates in your working shifts..?');
+                // req.flash('msg', 'Do you want to do updates in your working shifts..?');
                 res.render('waiters', {
                     user_name: waiterNames,
                     displayDays
@@ -34,7 +34,7 @@ module.exports = (waiter_app) => {
             let days = Array.isArray(req.body.days) ? req.body.days : [req.body.days];
 
             if (waiterNames == undefined || days == '') {
-                res.redirect('/waiters/' + waiterNames);
+                return res.redirect('/waiters/' + waiterNames);
             }
             if (await waiter_app.checkNames(waiterNames)) {
                 await waiter_app.setWAiterAndDays(waiterNames, days);
